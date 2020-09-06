@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Brain Game</string>
+    <string name="speed_final_score">Your final score : %d</string>
+    <string name="neither">non</string>
+    <string name="shape_and_color">both</string>
+    <string name="color_only">color</string>
+    <string name="shape_only">shape</string>
+    <string name="user_name_hint">username</string>
+    <string name="nick_name_hint">nickname</string>
+</resources>
