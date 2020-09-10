@@ -1,31 +1,25 @@
 package ir.artaateam.android.braingame;
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-import ir.artaateam.android.braingame.game1.Game1GameFragment;
 
 public class SingUpFragment extends Fragment {
     EditText usernameEditText;
     EditText nicknameEditText;
-    ImageButton singUpImageButton;
+    ImageView sss;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.sing_in_fragment,container,false);
+        return inflater.inflate(R.layout.sing_in_fragment, container, false);
     }
 
     @Override
@@ -34,65 +28,84 @@ public class SingUpFragment extends Fragment {
         findViews(view);
         configure();
     }
-    private void findViews(View view){
-        usernameEditText=view.findViewById(R.id.user_name_edit_text);
-        nicknameEditText=view.findViewById(R.id.nick_name_edit_text);
-        singUpImageButton=view.findViewById(R.id.sing_up_button);
+
+    private void findViews(View view) {
+        usernameEditText = view.findViewById(R.id.user_name_edit_text);
+        nicknameEditText = view.findViewById(R.id.nick_name_edit_text);
+        sss=view.findViewById(R.id.sss);
     }
-    private void configure(){
-        singUpImageButton.setOnClickListener(new View.OnClickListener() {
+
+    private void configure() {
+        sss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 singUpImageButtonOnClick();
             }
         });
     }
-    private void singUpImageButtonOnClick(){
-        String usernameString=usernameEditText.getText().toString();
-        if(usernameString.isEmpty()||
-                usernameString.length()<4||
-                usernameString.contains("  ")){
+
+    private void singUpImageButtonOnClick() {
+//        SettingBackgroundFragment settingBackgroundFragment=new SettingBackgroundFragment();
+//        getFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.setting_background_frame, settingBackgroundFragment)
+//                .commit();
+//        SettingsFragment settingsFragment =new SettingsFragment(settingBackgroundFragment);
+//        getFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.setting_frame, settingsFragment)
+//                .addToBackStack(null)
+//                .commit();
+
+        String usernameString = usernameEditText.getText().toString();
+        if (usernameString.isEmpty() ||
+                usernameString.length() < 4 ||
+                usernameString.contains("  ")) {
             WrongAnimation(usernameEditText);
             return;
         }
 
-        String nicknameString=nicknameEditText.getText().toString();
-        if(nicknameString.isEmpty()||
-                nicknameString.length()<4||
-                nicknameString.contains("  ")){
+        String nicknameString = nicknameEditText.getText().toString();
+        if (nicknameString.isEmpty() ||
+                nicknameString.length() < 4 ||
+                nicknameString.contains("  ")) {
             WrongAnimation(nicknameEditText);
             return;
         }
 
-        Game1GameFragment game1GameFragment=new Game1GameFragment();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.app_main_frame,game1GameFragment)
-                .commit();
+        saveUser();
+        MainActivity.showAppMainFragment(getActivity());
     }
 
-    private void WrongAnimation(EditText editText){
+    private void saveUser() {
+        String nicknameString = nicknameEditText.getText().toString();
+        String usernameString = usernameEditText.getText().toString();
+        User user=new User(usernameString,nicknameString,0);
+        UserPreferences.getInstance(getActivity()).putUser(user);
+    }
+
+    private void WrongAnimation(EditText editText) {
         editText.setText("");
-        ObjectAnimator editTextTranslationX=ObjectAnimator.ofFloat(
+        ObjectAnimator editTextTranslationX = ObjectAnimator.ofFloat(
                 editText,
                 "TranslationX",
-                0f,20f,0f,-20f,0f,20f,0f,-20f,0f
+                0f, 20f, 0f, -20f, 0f, 20f, 0f, -20f, 0f
         );
-        editTextTranslationX.setDuration(MainUtilValues.DELAY_WRONG_INPUT);
+        editTextTranslationX.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
 
-        ObjectAnimator editTextScaleX=ObjectAnimator.ofFloat(
+        ObjectAnimator editTextScaleX = ObjectAnimator.ofFloat(
                 editText,
                 "scaleX",
-                1f,1.5f,1f
+                1f, 1.5f, 1f
         );
-        editTextScaleX.setDuration(MainUtilValues.DELAY_WRONG_INPUT);
+        editTextScaleX.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
 
-        ObjectAnimator editTextScaleY=ObjectAnimator.ofFloat(
+        ObjectAnimator editTextScaleY = ObjectAnimator.ofFloat(
                 editText,
                 "scaleY",
-                1f,1.5f,1f
+                1f, 1.5f, 1f
         );
-        editTextScaleY.setDuration(MainUtilValues.DELAY_WRONG_INPUT);
+        editTextScaleY.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
 
         editTextTranslationX.start();
         editTextScaleX.start();

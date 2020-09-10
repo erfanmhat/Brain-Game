@@ -12,13 +12,33 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/background"
-        android:fitsSystemWindows="true"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/lives_image_view"
+        android:layout_marginLeft="10dp"
+        android:visibility="invisible"
+        android:src="@drawable/hart_red"
+        android:layout_width="@dimen/live_and_clock_xy"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="@dimen/live_and_clock_xy"/>
+    <TextView
+        android:id="@+id/lives_text_view"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@id/lives_image_view"
+        app:layout_constraintLeft_toLeftOf="@id/lives_image_view"
+        app:layout_constraintRight_toRightOf="@id/lives_image_view"
+        app:layout_constraintBottom_toBottomOf="@id/lives_image_view"
+        android:layout_width="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/black_text"
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/speed_countdown"
         android:layout_width="wrap_content"
@@ -50,53 +70,98 @@
 
     <Button
         android:id="@+id/shape_only_button"
+        android:visibility="invisible"
         android:layout_width="0dp"
         android:background="@color/game_main_color"
+        android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/shape_only"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/shape_and_color_button"
-        app:layout_constraintRight_toLeftOf="@id/color_only_button" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/color_only_button"/>
 
     <Button
         android:id="@+id/color_only_button"
+        android:visibility="invisible"
         android:layout_width="0dp"
+        android:background="@color/game_main_color"
+        android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/color_only"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/shape_only_button"
-        app:layout_constraintRight_toLeftOf="@id/neither_button" />
+        app:layout_constraintRight_toLeftOf="@id/shape_and_color_button"/>
 
     <Button
         android:id="@+id/shape_and_color_button"
+        android:visibility="invisible"
         android:layout_width="0dp"
+        android:background="@color/game_main_color"
+        android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/shape_and_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/shape_only_button" />
+        app:layout_constraintLeft_toRightOf="@id/color_only_button"
+        app:layout_constraintRight_toLeftOf="@id/neither_button"/>
 
     <Button
         android:id="@+id/neither_button"
+        android:visibility="invisible"
         android:layout_width="0dp"
+        android:background="@color/game_main_color"
+        android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/neither"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/color_only_button"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/shape_and_color_button"/>
 
+    <ImageView
+        android:id="@+id/remain_time_image_view"
+        android:visibility="invisible"
+        android:layout_width="@dimen/live_and_clock_xy"
+        android:src="@drawable/clock_int"
+        app:layout_constraintTop_toBottomOf="@id/lives_image_view"
+        app:layout_constraintLeft_toLeftOf="@id/lives_image_view"
+        android:layout_height="@dimen/live_and_clock_xy"/>
 
     <TextView
-        android:id="@+id/points"
+        android:id="@+id/remain_time_live_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="@id/shape_image_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:text="5"
+        android:textColor="@color/black_text"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/remain_time_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="@id/remain_time_image_view"
+        app:layout_constraintRight_toRightOf="@id/remain_time_image_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.900" />
+
+    <ImageView
+        android:id="@+id/graph_lives_image_view"
+        android:visibility="invisible"
+        android:layout_width="230dp"
+        android:src="@drawable/graph_red"
+        app:layout_constraintTop_toTopOf="@id/lives_image_view"
+        app:layout_constraintLeft_toRightOf="@id/lives_image_view"
+        app:layout_constraintBottom_toBottomOf="@id/lives_image_view"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/graph_remain_time_image_view"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:src="@drawable/graph_blue"
+        app:layout_constraintTop_toTopOf="@id/remain_time_image_view"
+        app:layout_constraintLeft_toRightOf="@id/remain_time_image_view"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/remain_time_image_view"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

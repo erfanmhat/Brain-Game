@@ -7,4 +7,5 @@
     <color name="white_text">#ffffff</color>
     <color name="black_text">#000000</color>
     <color name="red_text">#E40C0C</color>
+    <color name="edit_text_color">#888392</color>
 </resources>

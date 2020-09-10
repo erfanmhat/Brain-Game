@@ -1,16 +1,20 @@
 package ir.artaateam.android.braingame;
 
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+
 public class AppMainFragment extends Fragment {
-    Button startGame1Button;
+    ImageView startGame1ImageView;
+    TextView userTextView;
 
     @Nullable
     @Override
@@ -23,23 +27,29 @@ public class AppMainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
+        User user=UserPreferences.getInstance(getActivity()).getUser();
+        String userString="Your record : "+user.getBestScore();
+        userTextView.setText(userString);
+        MainActivity.startMusic(getActivity(),R.raw.music_menu,true);
+    }
+
+    @Override
+    public void onPause() {
+        MainActivity.stopMusic();
+        super.onPause();
     }
 
     private void findViews(View view){
-        //startGame1Button=view.findViewById(R.id.start_game1_button);
+        startGame1ImageView=view.findViewById(R.id.start_game1_image_view);
+        userTextView=view.findViewById(R.id.user_text_view);
     }
 
     private void configure(){
-        startGame1Button.setOnClickListener(new View.OnClickListener() {
+        startGame1ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startGame1ButtonOnClick();
+                MainActivity.showGame1GameFragment(getActivity());
             }
         });
     }
-
-    private void startGame1ButtonOnClick(){
-
-    }
-
 }

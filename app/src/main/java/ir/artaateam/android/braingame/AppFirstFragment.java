@@ -6,21 +6,17 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 public class AppFirstFragment extends Fragment {
-    private boolean isFirstTime;
-    private boolean isLoadingTimerStarted = false;
-    private boolean isPaused = false;
+    boolean isFirstTimePlaying;
+    String progressString = "";
 
-    private ImageView brainTrimImageView;
-    private TextView gameNameTextView;
-    private TextView waitTextView;
+    TextView progressTextView;
 
-    private CountDownTimer loadingTimer;
+    private CountDownTimer appFirstFragmentTimer;
 
     @Nullable
     @Override
@@ -32,75 +28,61 @@ public class AppFirstFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        startLoading();
-        User user = UserPreferences.getInstance(getActivity()).getUser();
-        isFirstTime = (user == null);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        isPaused = true;
-        if (isLoadingTimerStarted) {
-            loadingTimer.cancel();
-        }
+        checkIsFirstTimePlaying();
+        startCountDownTimer();
     }
 
     private void findViews(View view) {
-        brainTrimImageView = view.findViewById(R.id.brain_trim_image_view);
-        waitTextView = view.findViewById(R.id.wait_text_view);
+        progressTextView = view.findViewById(R.id.progress_text_view);
     }
 
-    private void startLoading() {
-        waitTextView.setText("");
-        loadingTimer = new CountDownTimer(MainUtilValues.DELAY_TIME_FOR_GAME_FIRST_FRAGMENT, 500) {
+    private void checkIsFirstTimePlaying() {
+        User user = UserPreferences.getInstance(getActivity()).getUser();
+        isFirstTimePlaying = (user == null);
+    }
+
+    private void startCountDownTimer() {
+        appFirstFragmentTimer = new CountDownTimer(MainUtilValues.DELAY_TIME_FOR_GAME_FIRST_FRAGMENT, 200) {
             @Override
             public void onTick(long l) {
-                if (!isPaused) {
-                    String str = (String) waitTextView.getText();
-                    switch (str) {
-                        case "":
-                            waitTextView.setText(".");
-                            break;
-                        case ".":
-                            waitTextView.setText("..");
-                            break;
-                        case "..":
-                            waitTextView.setText("...");
-                            break;
-                        case "...":
-                            waitTextView.setText("");
-                            break;
-                    }
-                }
+                progressUpdater();
             }
 
             @Override
             public void onFinish() {
-                if (isFirstTime) {
-                    showSingInFragment();
-                    return;
-                }
-                showGameMainFragment();
+                showNextFragment();
             }
         };
-        loadingTimer.start();
-        isLoadingTimerStarted = true;
+        appFirstFragmentTimer.start();
     }
 
-    private void showGameMainFragment() {
-        AppMainFragment appMainFragment = new AppMainFragment();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.app_main_frame, appMainFragment)
-                .commit();
+    private void progressUpdater() {
+        switch (progressString) {
+            case "": {
+                progressString = ".";
+                break;
+            }
+            case ".": {
+                progressString = "..";
+                break;
+            }
+            case "..": {
+                progressString = "...";
+                break;
+            }
+            case "...": {
+                progressString = "";
+                break;
+            }
+        }
+        progressTextView.setText(progressString);
     }
 
-    private void showSingInFragment() {
-        SingUpFragment singUpFragment = new SingUpFragment();
-        getFragmentManager()
-                .beginTransaction()
-                .add(R.id.app_main_frame, singUpFragment)
-                .commit();
+    private void showNextFragment() {
+        if (isFirstTimePlaying) {
+            MainActivity.showSingUpFragment(getActivity());
+        } else {
+            MainActivity.showAppMainFragment(getActivity());
+        }
     }
 }
