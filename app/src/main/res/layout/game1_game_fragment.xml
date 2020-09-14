@@ -68,58 +68,91 @@
         app:layout_constraintBottom_toTopOf="@id/shape_image_view"
         tools:ignore="ContentDescription" />
 
-    <Button
+    <ImageView
         android:id="@+id/shape_only_button"
         android:visibility="invisible"
         android:layout_width="0dp"
-        android:background="@color/game_main_color"
+        android:src="@drawable/rounded_button"
         android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/shape_only"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/color_only_button"/>
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/shape_only"
+        android:textColor="@color/white_text"
+        app:layout_constraintTop_toTopOf="@id/shape_only_button"
+        app:layout_constraintBottom_toBottomOf="@id/shape_only_button"
+        app:layout_constraintLeft_toLeftOf="@id/shape_only_button"
+        app:layout_constraintRight_toRightOf="@id/shape_only_button"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
         android:id="@+id/color_only_button"
         android:visibility="invisible"
         android:layout_width="0dp"
-        android:background="@color/game_main_color"
+        android:src="@drawable/rounded_button"
         android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/color_only"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/shape_only_button"
         app:layout_constraintRight_toLeftOf="@id/shape_and_color_button"/>
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/color_only"
+        android:textColor="@color/white_text"
+        app:layout_constraintTop_toTopOf="@id/color_only_button"
+        app:layout_constraintBottom_toBottomOf="@id/color_only_button"
+        app:layout_constraintLeft_toLeftOf="@id/color_only_button"
+        app:layout_constraintRight_toRightOf="@id/color_only_button"
+        android:layout_height="wrap_content"/>
+    <ImageView
         android:id="@+id/shape_and_color_button"
         android:visibility="invisible"
         android:layout_width="0dp"
-        android:background="@color/game_main_color"
+        android:src="@drawable/rounded_button"
         android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/shape_and_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/color_only_button"
         app:layout_constraintRight_toLeftOf="@id/neither_button"/>
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/white_text"
+        android:text="@string/shape_and_color"
+        app:layout_constraintTop_toTopOf="@id/shape_and_color_button"
+        app:layout_constraintBottom_toBottomOf="@id/shape_and_color_button"
+        app:layout_constraintLeft_toLeftOf="@id/shape_and_color_button"
+        app:layout_constraintRight_toRightOf="@id/shape_and_color_button"
+        android:layout_height="wrap_content"/>
+    <ImageView
         android:id="@+id/neither_button"
         android:visibility="invisible"
         android:layout_width="0dp"
-        android:background="@color/game_main_color"
+        android:src="@drawable/rounded_button"
         android:textColor="@color/white_text"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/neither"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/shape_and_color_button"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/neither"
+        android:textColor="@color/white_text"
+        app:layout_constraintTop_toTopOf="@id/neither_button"
+        app:layout_constraintBottom_toBottomOf="@id/neither_button"
+        app:layout_constraintLeft_toLeftOf="@id/neither_button"
+        app:layout_constraintRight_toRightOf="@id/neither_button"
+        android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/remain_time_image_view"
         android:visibility="invisible"
@@ -145,16 +178,6 @@
         app:layout_constraintVertical_bias="0.900" />
 
     <ImageView
-        android:id="@+id/graph_lives_image_view"
-        android:visibility="invisible"
-        android:layout_width="230dp"
-        android:src="@drawable/graph_red"
-        app:layout_constraintTop_toTopOf="@id/lives_image_view"
-        app:layout_constraintLeft_toRightOf="@id/lives_image_view"
-        app:layout_constraintBottom_toBottomOf="@id/lives_image_view"
-        android:layout_height="wrap_content"/>
-
-    <ImageView
         android:id="@+id/graph_remain_time_image_view"
         android:visibility="invisible"
         android:layout_width="0dp"
@@ -163,5 +186,16 @@
         app:layout_constraintLeft_toRightOf="@id/remain_time_image_view"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/remain_time_image_view"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/graph_lives_image_view"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:src="@drawable/graph_red"
+        app:layout_constraintTop_toTopOf="@id/lives_image_view"
+        app:layout_constraintLeft_toRightOf="@id/lives_image_view"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/lives_image_view"
         android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
