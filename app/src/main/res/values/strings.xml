@@ -9,4 +9,7 @@
     <string name="nick_name_hint">nickname</string>
     <string name="sing_up">sing up</string>
     <string name="loading">Loading</string>
+    <string name="how_to_do">Don\'t know how to do</string>
+    <string name="about_us">About us</string>
+    <string name="quit">Quit</string>
 </resources>

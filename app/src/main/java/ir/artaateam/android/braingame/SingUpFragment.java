@@ -14,7 +14,8 @@ import androidx.annotation.Nullable;
 public class SingUpFragment extends Fragment {
     EditText usernameEditText;
     EditText nicknameEditText;
-    ImageView sss;
+    ImageView singUpButton;
+    ImageView settingsImageView;
 
     @Nullable
     @Override
@@ -32,34 +33,30 @@ public class SingUpFragment extends Fragment {
     private void findViews(View view) {
         usernameEditText = view.findViewById(R.id.user_name_edit_text);
         nicknameEditText = view.findViewById(R.id.nick_name_edit_text);
-        sss=view.findViewById(R.id.sss);
+        singUpButton = view.findViewById(R.id.sing_up_button);
+        settingsImageView= view.findViewById(R.id.sing_up_settings_image_view);
     }
 
     private void configure() {
-        sss.setOnClickListener(new View.OnClickListener() {
+        singUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 singUpImageButtonOnClick();
             }
         });
+
+        settingsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.showSettingsFragment(getActivity());
+            }
+        });
     }
 
     private void singUpImageButtonOnClick() {
-//        SettingBackgroundFragment settingBackgroundFragment=new SettingBackgroundFragment();
-//        getFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.setting_background_frame, settingBackgroundFragment)
-//                .commit();
-//        SettingsFragment settingsFragment =new SettingsFragment(settingBackgroundFragment);
-//        getFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.setting_frame, settingsFragment)
-//                .addToBackStack(null)
-//                .commit();
-
         String usernameString = usernameEditText.getText().toString();
         if (usernameString.isEmpty() ||
-                usernameString.length() < 4 ||
+                usernameString.length() < 3 ||
                 usernameString.contains("  ")) {
             WrongAnimation(usernameEditText);
             return;
@@ -67,7 +64,7 @@ public class SingUpFragment extends Fragment {
 
         String nicknameString = nicknameEditText.getText().toString();
         if (nicknameString.isEmpty() ||
-                nicknameString.length() < 4 ||
+                nicknameString.length() < 3 ||
                 nicknameString.contains("  ")) {
             WrongAnimation(nicknameEditText);
             return;
@@ -80,7 +77,9 @@ public class SingUpFragment extends Fragment {
     private void saveUser() {
         String nicknameString = nicknameEditText.getText().toString();
         String usernameString = usernameEditText.getText().toString();
-        User user=new User(usernameString,nicknameString,0);
+        User user = UserPreferences.getInstance(getActivity()).getUser();
+        user.setNickname(nicknameString);
+        user.setUsername(usernameString);
         UserPreferences.getInstance(getActivity()).putUser(user);
     }
 

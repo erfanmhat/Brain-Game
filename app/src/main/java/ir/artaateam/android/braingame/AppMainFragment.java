@@ -13,8 +13,9 @@ import androidx.annotation.Nullable;
 
 
 public class AppMainFragment extends Fragment {
-    ImageView startGame1ImageView;
-    TextView userTextView;
+    private ImageView settingsImageView;
+    private ImageView startGame1ImageView;
+    private TextView userTextView;
 
     @Nullable
     @Override
@@ -42,13 +43,21 @@ public class AppMainFragment extends Fragment {
     private void findViews(View view){
         startGame1ImageView=view.findViewById(R.id.start_game1_image_view);
         userTextView=view.findViewById(R.id.user_text_view);
+        settingsImageView=view.findViewById(R.id.settings_image_view);
     }
 
     private void configure(){
         startGame1ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.stopMusic();
                 MainActivity.showGame1GameFragment(getActivity());
+            }
+        });
+        settingsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.showSettingsFragment(getActivity());
             }
         });
     }

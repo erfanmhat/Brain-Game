@@ -177,25 +177,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.900" />
 
-    <ImageView
-        android:id="@+id/graph_remain_time_image_view"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/graph_blue"
-        app:layout_constraintTop_toTopOf="@id/remain_time_image_view"
-        app:layout_constraintLeft_toRightOf="@id/remain_time_image_view"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/remain_time_image_view"
-        android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/graph_lives_image_view"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/graph_red"
-        app:layout_constraintTop_toTopOf="@id/lives_image_view"
-        app:layout_constraintLeft_toRightOf="@id/lives_image_view"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/lives_image_view"
-        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

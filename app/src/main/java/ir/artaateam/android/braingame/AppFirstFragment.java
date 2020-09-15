@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+
 public class AppFirstFragment extends Fragment {
     boolean isFirstTimePlaying;
     String progressString = "";
@@ -38,7 +39,7 @@ public class AppFirstFragment extends Fragment {
 
     private void checkIsFirstTimePlaying() {
         User user = UserPreferences.getInstance(getActivity()).getUser();
-        isFirstTimePlaying = (user == null);
+        isFirstTimePlaying = (user.getUsername().equals(""));
     }
 
     private void startCountDownTimer() {

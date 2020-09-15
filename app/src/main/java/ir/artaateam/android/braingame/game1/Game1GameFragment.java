@@ -92,8 +92,8 @@ public class Game1GameFragment extends Fragment {
     private TextView livesTextView;
     private TextView remainTimeLiveEditText;
     private ImageView remainTimeImageView;
-    private ImageView graphLivesImageView;
-    private ImageView graphRemainTimeImageView;
+
+
 
     private AnimatorSet countdownAnimatorSet = null;
     private AnimatorSet changeShapeAnimatorSet = null;
@@ -112,8 +112,6 @@ public class Game1GameFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        MainActivity.startMusic(getActivity(), R.raw.game_music1, false);
-        configureNextMusic(GAME_MUSIC1_DURATION,R.raw.game_music2);
         configure();
         generateFirstLevelAndStartTimer();
     }
@@ -137,8 +135,7 @@ public class Game1GameFragment extends Fragment {
         livesTextView = view.findViewById(R.id.lives_text_view);
         remainTimeLiveEditText = view.findViewById(R.id.remain_time_live_edit_text);
         remainTimeImageView = view.findViewById(R.id.remain_time_image_view);
-        graphLivesImageView = view.findViewById(R.id.graph_lives_image_view);
-        graphRemainTimeImageView = view.findViewById(R.id.graph_remain_time_image_view);
+
     }
 
     private void configure() {
@@ -421,6 +418,8 @@ public class Game1GameFragment extends Fragment {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 if (countdownInt == 0) {
+                    MainActivity.startMusic(getActivity(), R.raw.game_music1, false);
+                    configureNextMusic(GAME_MUSIC1_DURATION,R.raw.game_music2);
                     startGame();
                 } else {
                     countdownAnimation();
@@ -432,6 +431,13 @@ public class Game1GameFragment extends Fragment {
                 super.onAnimationStart(animation);
                 speedCountdownTextView.setText(String.valueOf(countdownInt));
                 countdownInt--;
+                if(countdownInt==2){
+                    MainActivity.startAudio(getActivity(),R.raw.cd1,false);
+                }else if(countdownInt==1){
+                    MainActivity.startAudio(getActivity(),R.raw.cd2,false);
+                }else if(countdownInt==0){
+                    MainActivity.startAudio(getActivity(),R.raw.cd3,false);
+                }
             }
         });
         countdownAnimatorSet.start();
@@ -529,7 +535,6 @@ public class Game1GameFragment extends Fragment {
             if (livesFloat != MAX_LIVES) {
                 livesFloat++;
                 livesImageViewAnimation(INCREASE_LIVE);
-                graphLivesImageViewAnimation(INCREASE_LIVE);
             }
         } else {
             if (livesFloat == 1) {
@@ -539,7 +544,6 @@ public class Game1GameFragment extends Fragment {
             } else {
                 livesFloat--;
                 livesImageViewAnimation(DECREASE_LIVE);
-                graphLivesImageViewAnimation(DECREASE_LIVE);
             }
         }
     }
@@ -588,28 +592,6 @@ public class Game1GameFragment extends Fragment {
         livesImageViewScaleX.start();
         livesImageViewScaleY.start();
         livesImageViewAlpha.start();
-    }
-
-    private void graphLivesImageViewAnimation(int increaseOrDecrease) {
-        float oldScaleXValue = graphLivesImageView.getScaleX();
-        float newScaleXValue = 1f;
-        switch (increaseOrDecrease) {
-            case INCREASE_LIVE: {
-                newScaleXValue = (oldScaleXValue + (oldScaleXValue / MAX_LIVES));
-                break;
-            }
-            case DECREASE_LIVE: {
-                newScaleXValue = (oldScaleXValue - (oldScaleXValue / MAX_LIVES));
-                break;
-            }
-        }
-        ObjectAnimator graphLivesImageViewScaleX = ObjectAnimator.ofFloat(
-                graphLivesImageView,
-                "ScaleX",
-                oldScaleXValue, newScaleXValue
-        );
-        graphLivesImageViewScaleX.setDuration(GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION);
-        graphLivesImageViewScaleX.start();
     }
 
     private void setLivesAlphaAndText() {
@@ -702,7 +684,6 @@ public class Game1GameFragment extends Fragment {
         shapeAndColorImageView.setVisibility(View.VISIBLE);
         colorOnlyImageView.setVisibility(View.VISIBLE);
         neitherImageView.setVisibility(View.VISIBLE);
-        graphLivesImageView.setVisibility(View.VISIBLE);
-        graphRemainTimeImageView.setVisibility(View.VISIBLE);
+
     }
 }

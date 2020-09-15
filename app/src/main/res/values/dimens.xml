@@ -5,4 +5,9 @@
     <dimen name="image_view_button">50dp</dimen>
     <dimen name="play_button">100dp</dimen>
     <dimen name="live_and_clock_xy">50dp</dimen>
+    <dimen name="settings_margin">15dp</dimen>
+    <dimen name="settings_text_size">30sp</dimen>
+    <dimen name="settings_button_width">250sp</dimen>
+    <dimen name="settings_button_height">50sp</dimen>
+    <dimen name="settings_icon">25sp</dimen>
 </resources>

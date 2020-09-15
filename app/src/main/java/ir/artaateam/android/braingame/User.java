@@ -1,9 +1,11 @@
 package ir.artaateam.android.braingame;
 
 public class User {
-    String username;
-    String nickname;
-    int bestScore;
+    private String username;
+    private String nickname;
+    private int bestScore;
+    private boolean isMusicAllowed = true;
+    private boolean isAudioAllowed = true;
 
     User() {
         username = "";
@@ -12,9 +14,9 @@ public class User {
     }
 
     User(String username, String nickname, int bestScore) {
-        this.username=username;
-        this.nickname=nickname;
-        this.bestScore=bestScore;
+        this.username = username;
+        this.nickname = nickname;
+        this.bestScore = bestScore;
     }
 
     public void setUsername(String username) {
@@ -39,5 +41,21 @@ public class User {
 
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
+    }
+
+    public void setIsMusicAllowed(boolean musicAllowed) {
+        isMusicAllowed = musicAllowed;
+    }
+
+    public boolean getIsMusicAllowed() {
+        return isMusicAllowed;
+    }
+
+    public void setIsAudioAllowed(boolean AudioAllowed) {
+        isAudioAllowed = AudioAllowed;
+    }
+
+    public boolean getIsAudioAllowed() {
+        return isAudioAllowed;
     }
 }

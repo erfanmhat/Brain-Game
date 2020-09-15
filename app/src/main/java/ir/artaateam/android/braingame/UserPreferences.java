@@ -29,7 +29,7 @@ public class UserPreferences {
         Gson gson=new Gson();
         String userJson=sharedPreferences.getString("User",null);
         if(userJson==null) {
-            return null;
+            return new User();
         }
         return gson.fromJson(userJson,User.class);
     }
