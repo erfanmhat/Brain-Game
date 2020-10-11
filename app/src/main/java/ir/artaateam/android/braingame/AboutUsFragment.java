@@ -8,15 +8,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-public class SettingBackgroundFragment extends Fragment {
+public class AboutUsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.setting_background_fragment,container,false);
+        return inflater.inflate(R.layout.about_us_fragment,container,false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void closeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 }

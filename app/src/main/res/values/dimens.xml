@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="setting_w_h">300dp</dimen>
+    <dimen name="setting_frame_xy">300dp</dimen>
     <dimen name="loading_text">40sp</dimen>
     <dimen name="image_view_button">50dp</dimen>
     <dimen name="play_button">100dp</dimen>
     <dimen name="live_and_clock_xy">50dp</dimen>
     <dimen name="settings_margin">15dp</dimen>
     <dimen name="settings_text_size">30sp</dimen>
-    <dimen name="settings_button_width">250sp</dimen>
+    <dimen name="settings_button_width">50sp</dimen>
     <dimen name="settings_button_height">50sp</dimen>
-    <dimen name="settings_icon">25sp</dimen>
+    <dimen name="settings_icon">30sp</dimen>
+    <dimen name="graph_x">650dp</dimen>
+    <dimen name="graph_y">30dp</dimen>
+    <dimen name="edit_text_width">300dp</dimen>
+    <dimen name="edit_text_height">30dp</dimen>
 </resources>

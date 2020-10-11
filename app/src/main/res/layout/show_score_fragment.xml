@@ -7,7 +7,6 @@
 
     <ImageView
         android:id="@+id/background_image_view"
-        tools:ignore="ContentDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
@@ -15,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/scores_text_view"
@@ -58,4 +58,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/home_image_view"
         android:layout_height="@dimen/image_view_button"/>
+
+    <ImageView
+        android:id="@+id/show_score_settings_image_view"
+        android:layout_width="@dimen/settings_icon"
+        android:src="@drawable/settings_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/settings_margin"
+        android:layout_marginTop="@dimen/settings_margin"
+        android:layout_height="@dimen/settings_icon"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

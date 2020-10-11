@@ -70,6 +70,24 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public static void showAboutUsFragment(Activity activity){
+        AboutUsFragment aboutUsFragment=new AboutUsFragment();
+        activity.getFragmentManager()
+                .beginTransaction()
+                .add(R.id.app_main_frame,aboutUsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void showHowToDoFragment(Activity activity){
+        HowToDoFragment howToDoFragment=new HowToDoFragment();
+        activity.getFragmentManager()
+                .beginTransaction()
+                .add(R.id.app_main_frame,howToDoFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public static void showSettingsFragment(Activity activity) {
         SettingsFragment settingsFragment = new SettingsFragment();
         activity.getFragmentManager()

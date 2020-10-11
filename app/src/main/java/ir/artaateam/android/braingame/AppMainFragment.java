@@ -51,6 +51,7 @@ public class AppMainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity.stopMusic();
+                removeFragment();
                 MainActivity.showGame1GameFragment(getActivity());
             }
         });
@@ -60,5 +61,11 @@ public class AppMainFragment extends Fragment {
                 MainActivity.showSettingsFragment(getActivity());
             }
         });
+    }
+    private void removeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 }

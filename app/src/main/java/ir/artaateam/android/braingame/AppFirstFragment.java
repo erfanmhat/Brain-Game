@@ -80,10 +80,18 @@ public class AppFirstFragment extends Fragment {
     }
 
     private void showNextFragment() {
+        removeFragment();
         if (isFirstTimePlaying) {
             MainActivity.showSingUpFragment(getActivity());
         } else {
             MainActivity.showAppMainFragment(getActivity());
         }
+    }
+
+    private void removeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 }

@@ -71,7 +71,15 @@ public class SingUpFragment extends Fragment {
         }
 
         saveUser();
+        removeFragment();
         MainActivity.showAppMainFragment(getActivity());
+    }
+
+    private void removeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 
     private void saveUser() {

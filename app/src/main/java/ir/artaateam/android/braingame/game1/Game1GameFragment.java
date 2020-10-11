@@ -26,7 +26,7 @@ import ir.artaateam.android.braingame.UserPreferences;
 public class Game1GameFragment extends Fragment {
     private int GAME1_SLIDE_ANIMATION_DURATION = Game1AnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
     private int GAME1_DECISION_RESULT_ANIMATION_DURATION = Game1AnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
-    private int GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION =Game1AnimationValues.GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX;
+    private int GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION = Game1AnimationValues.GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX;
 
 
     private int MAX_TIME_FOR_ANSWER_MAX = 5000;
@@ -41,15 +41,15 @@ public class Game1GameFragment extends Fragment {
     private final float MAX_LIVES = 4f;
 
 
-    private final double HARDENING_COEFFICIENT=0.985;
+    private final double HARDENING_COEFFICIENT = 0.985;
 
-    private final long GAME_MUSIC1_DURATION=15360;
-    private final long GAME_MUSIC2_DURATION=84480;
-    private final long GAME_MUSIC3_DURATION=1503;
-    private final long GAME_MUSIC4_DURATION=310000;
+    private final long GAME_MUSIC1_DURATION = 15360;
+    private final long GAME_MUSIC2_DURATION = 84480;
+    private final long GAME_MUSIC3_DURATION = 1503;
+    private final long GAME_MUSIC4_DURATION = 310000;
     //*****************************
-    private final int INCREASE_LIVE = 1;
-    private final int DECREASE_LIVE = -1;
+    private final float INCREASE_LIVE = 1;
+    private final float DECREASE_LIVE = -1;
     //*****************************
     private final int SHAPE_ONLY = 0;
     private final int COLOR_ONLY = 1;
@@ -67,6 +67,7 @@ public class Game1GameFragment extends Fragment {
     //*****************************
 
 
+
     private int scoreInt = 0;
     private int countdownInt = 3;
     private int oldColor = -1;
@@ -74,12 +75,17 @@ public class Game1GameFragment extends Fragment {
     private int oldShape = -1;
     private int newShape = -1;
     private int shapeIndex;
-    private int gameMusicNumber=1;
-    private float livesFloat = FIRST_LIVES;
+    private int gameMusicNumber = 1;
+    private float livesFloat;
+    private float oldGraphScaleLives;
+    private float oldGraphScaleLivesTime;
+    private float newGraphScaleLives;
+    private float newGraphScaleLivesTime;
     private boolean canClickOnButton = false;
     private boolean gameInProgress = false;
     private boolean isRemainTimeLiveCountDownTimerStarted = false;
     private boolean isMusicTimerStarted = false;
+    private boolean isRemainTimeLiveFinished = false;
 
     private ImageView shapeOnlyImageView;
     private ImageView colorOnlyImageView;
@@ -88,16 +94,15 @@ public class Game1GameFragment extends Fragment {
     private ImageView shapeImageView;
     private ImageView validationResultImageView;
     private TextView speedCountdownTextView;
-    private ImageView livesImageView;
-    private TextView livesTextView;
     private TextView remainTimeLiveEditText;
-    private ImageView remainTimeImageView;
-
+    private View graphViewLives;
 
 
     private AnimatorSet countdownAnimatorSet = null;
     private AnimatorSet changeShapeAnimatorSet = null;
     private AnimatorSet validationResultImageViewAlphaAndScaleAnimatorSet = null;
+    private AnimatorSet graphLivesAnimationSet = null;
+    private AnimatorSet graphTimeAnimationSet = null;
     private CountDownTimer remainTimeLiveCountDownTimer;
     private CountDownTimer nextMusicTimer;
     private Random random;
@@ -131,15 +136,14 @@ public class Game1GameFragment extends Fragment {
         shapeImageView = view.findViewById(R.id.shape_image_view);
         validationResultImageView = view.findViewById(R.id.validation_result_image);
         speedCountdownTextView = view.findViewById(R.id.speed_countdown);
-        livesImageView = view.findViewById(R.id.lives_image_view);
-        livesTextView = view.findViewById(R.id.lives_text_view);
         remainTimeLiveEditText = view.findViewById(R.id.remain_time_live_edit_text);
-        remainTimeImageView = view.findViewById(R.id.remain_time_image_view);
-
+        graphViewLives = view.findViewById(R.id.graph_view_lives);
     }
 
     private void configure() {
+        livesFloat = FIRST_LIVES;
         random = new Random();
+        configureGraphScaleAndValues();
 
         shapeOnlyImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +175,7 @@ public class Game1GameFragment extends Fragment {
         if (canClickOnButton) {
             evaluateInputButtonAndConfigureNextLevel(clickedButton);
             makeGameHarder();
+            configureAndStartGraphTime();
         }
     }
 
@@ -179,43 +184,44 @@ public class Game1GameFragment extends Fragment {
         increaseAnimationsSpeed();
     }
 
-    private void increaseAnimationsSpeed(){
-            GAME1_SLIDE_ANIMATION_DURATION =
-                    (int)(hardeningCoefficientAccordingToScoreInt()*
-                            Game1AnimationValues.
-                                    GAME1_SLIDE_ANIMATION_DURATION_MAX);
+    private void increaseAnimationsSpeed() {
+        GAME1_SLIDE_ANIMATION_DURATION =
+                (int) (hardeningCoefficientAccordingToScoreInt() *
+                        Game1AnimationValues.
+                                GAME1_SLIDE_ANIMATION_DURATION_MAX);
 
-            GAME1_DECISION_RESULT_ANIMATION_DURATION =
-                    (int)(hardeningCoefficientAccordingToScoreInt()*
-                            Game1AnimationValues.
-                                    GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX);
+        GAME1_DECISION_RESULT_ANIMATION_DURATION =
+                (int) (hardeningCoefficientAccordingToScoreInt() *
+                        Game1AnimationValues.
+                                GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX);
 
-            GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION =
-                    (int)(hardeningCoefficientAccordingToScoreInt()*
-                            Game1AnimationValues.
-                                    GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX);
+        GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION =
+                (int) (hardeningCoefficientAccordingToScoreInt() *
+                        Game1AnimationValues.
+                                GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX);
     }
 
     private void decreaseMaxTimeForAnswer() {
         remainTimeLiveCountDownTimer.cancel();
 
-        MAX_TIME_FOR_ANSWER=
-                (int)(hardeningCoefficientAccordingToScoreInt()*
+        MAX_TIME_FOR_ANSWER =
+                (int) (hardeningCoefficientAccordingToScoreInt() *
                         MAX_TIME_FOR_ANSWER_MAX);
 
         configureLivesCountDown();
         remainTimeLiveCountDownTimer.start();
     }
 
-    private double hardeningCoefficientAccordingToScoreInt(){
-        return Math.pow(HARDENING_COEFFICIENT,scoreInt);
+    private double hardeningCoefficientAccordingToScoreInt() {
+        return Math.pow(HARDENING_COEFFICIENT, scoreInt);
     }
 
-    private void configureNextMusic(long duration,final int res) {
+    private void configureNextMusic(long duration, final int res) {
         nextMusicTimer = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long l) {
             }
+
             @Override
             public void onFinish() {
                 configureNextMusicOnFinish(res);
@@ -225,29 +231,24 @@ public class Game1GameFragment extends Fragment {
         isMusicTimerStarted = true;
     }
 
-    private void configureNextMusicOnFinish(int res){
-        if (gameInProgress){
+    private void configureNextMusicOnFinish(int res) {
+        if (gameInProgress) {
             gameMusicNumber++;
-            switch (gameMusicNumber){
+            switch (gameMusicNumber) {
                 case 2: {
                     MainActivity.startMusic(getActivity(), res, false);
                     configureNextMusic(GAME_MUSIC2_DURATION, R.raw.game_music3);
                     break;
                 }
-                case 3:{
+                case 3: {
                     MainActivity.startMusic(getActivity(), res, false);
                     configureNextMusic(GAME_MUSIC3_DURATION, R.raw.game_music4);
                     break;
                 }
-                case 4:{
+                case 4: {
                     MainActivity.startMusic(getActivity(), res, true);
-                    //configureNextMusic(GAME_MUSIC4_DURATION, R.raw.game_music3);
                     break;
                 }
-//                case 5:{
-//                    //MainActivity.startMusic(getActivity(), res, true);
-//                    break;
-//                }
             }
         }
     }
@@ -256,33 +257,60 @@ public class Game1GameFragment extends Fragment {
         setButtonsAndClockAndLiveVisible();
         gameInProgress = true;
         canClickOnButton = true;
-        setLivesAlphaAndText();
         configureLivesCountDown();
+        configureAndStartGraphTime();
         nextLevel();
     }
 
     private void nextLevel() {
-        ObjectAnimator imageOutAnimation = ObjectAnimator.ofFloat(
+        ObjectAnimator shapeOutAnimationX = ObjectAnimator.ofFloat(
                 shapeImageView,
-                "translationX",
-                0f, -500f);
-        imageOutAnimation.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+                "scaleX",
+                1f, 0f);
+        shapeOutAnimationX.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
 
-        final ObjectAnimator imageInAnimation = ObjectAnimator.ofFloat(
+        ObjectAnimator shapeOutAnimationY = ObjectAnimator.ofFloat(
                 shapeImageView,
-                "translationX",
-                500f, 0f);
-        imageInAnimation.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+                "scaleY",
+                1f, 0f);
+        shapeOutAnimationY.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+
+        ObjectAnimator shapeOutAnimationRotation = ObjectAnimator.ofFloat(
+                shapeImageView,
+                "RotationY",
+                0f, 720f);
+        shapeOutAnimationRotation.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+
+
+        final ObjectAnimator shapeInAnimationX = ObjectAnimator.ofFloat(
+                shapeImageView,
+                "scaleX",
+                0f, 1f);
+        shapeInAnimationX.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+
+        final ObjectAnimator shapeInAnimationY = ObjectAnimator.ofFloat(
+                shapeImageView,
+                "scaleY",
+                0f, 1f);
+        shapeInAnimationY.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
+
+        final ObjectAnimator shapeInAnimationRotation = ObjectAnimator.ofFloat(
+                shapeImageView,
+                "RotationX",
+                0f, -720f);
+        shapeInAnimationRotation.setDuration(GAME1_SLIDE_ANIMATION_DURATION);
 
         changeShapeAnimatorSet = new AnimatorSet();
-        changeShapeAnimatorSet.playTogether(imageOutAnimation);
+        changeShapeAnimatorSet.playTogether(shapeOutAnimationX,shapeOutAnimationY,shapeOutAnimationRotation);
         changeShapeAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 setNextNewRandomShape();
                 updateNewColorAndShapeByIndex();
-                imageInAnimation.start();
+                shapeInAnimationX.start();
+                shapeInAnimationY.start();
+                shapeInAnimationRotation.start();
             }
         });
         changeShapeAnimatorSet.start();
@@ -295,37 +323,131 @@ public class Game1GameFragment extends Fragment {
         saveGameIfNewHighScore();
         MainActivity.showShowScoreFragment(getActivity(), scoreInt);
         closeGame();
+        removeFragment();
     }
 
     private void closeGame() {
-        canClickOnButton = false;
-        if (countdownAnimatorSet != null) {
-            if (countdownAnimatorSet.isRunning()) {
-                countdownAnimatorSet.cancel();
+        try {
+            canClickOnButton = false;
+            if (countdownAnimatorSet != null) {
+                if (countdownAnimatorSet.isRunning()) {
+                    countdownAnimatorSet.cancel();
+                }
             }
-        }
-        if (changeShapeAnimatorSet != null) {
-            if (changeShapeAnimatorSet.isRunning()) {
-                changeShapeAnimatorSet.cancel();
+            if (changeShapeAnimatorSet != null) {
+                if (changeShapeAnimatorSet.isRunning()) {
+                    changeShapeAnimatorSet.cancel();
+                }
             }
-        }
-        if (validationResultImageViewAlphaAndScaleAnimatorSet != null) {
-            if (validationResultImageViewAlphaAndScaleAnimatorSet.isRunning()) {
-                validationResultImageViewAlphaAndScaleAnimatorSet.cancel();
+            if (validationResultImageViewAlphaAndScaleAnimatorSet != null) {
+                if (validationResultImageViewAlphaAndScaleAnimatorSet.isRunning()) {
+                    validationResultImageViewAlphaAndScaleAnimatorSet.cancel();
+                }
             }
+            if (graphLivesAnimationSet != null) {
+                if (graphLivesAnimationSet.isRunning()) {
+                    graphLivesAnimationSet.cancel();
+                }
+            }
+            if (graphTimeAnimationSet != null) {
+                if (graphTimeAnimationSet.isRunning()) {
+                    graphTimeAnimationSet.cancel();
+                }
+            }
+            if (isRemainTimeLiveCountDownTimerStarted) {
+                remainTimeLiveCountDownTimer.cancel();
+            }
+            if (isMusicTimerStarted) {
+                nextMusicTimer.cancel();
+            }
+        } catch (Exception ignored) {
         }
-        if (isRemainTimeLiveCountDownTimerStarted) {
-            remainTimeLiveCountDownTimer.cancel();
-        }
-        if (isMusicTimerStarted) {
-            nextMusicTimer.cancel();
-        }
+    }
+
+    private void removeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 
     private void generateFirstLevelAndStartTimer() {
         setNewRandomShape();
         updateNewColorAndShapeByIndex();
         countdownAnimation();
+    }
+
+    private void increaseOrDecreaseGraphLives(float increaseOrDecrease) {
+        oldGraphScaleLives = newGraphScaleLives;
+        newGraphScaleLives = newGraphScaleLives + ((1f / MAX_LIVES) * (increaseOrDecrease));
+        if (newGraphScaleLives < 0f) {
+            newGraphScaleLives = 0f;
+        }
+        if (newGraphScaleLives > 1f) {
+            newGraphScaleLives = 1f;
+        }
+
+        ObjectAnimator graphScaleX = ObjectAnimator.ofFloat(
+                graphViewLives,
+                "scaleX",
+                oldGraphScaleLives,
+                newGraphScaleLives
+        );
+        graphScaleX.setDuration(GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION);
+        configureGraphLivesAnimationSet();
+        graphLivesAnimationSet.playTogether(graphScaleX);
+        graphLivesAnimationSet.start();
+    }
+
+    private void configureGraphTimeAnimationSet() {
+        if (graphTimeAnimationSet == null) {
+            graphTimeAnimationSet = new AnimatorSet();
+        }
+        try {
+            if (graphTimeAnimationSet.isRunning()) {
+                graphTimeAnimationSet.cancel();
+            }
+        } catch (Exception ignored) {
+        }
+    }///////////////////////////////
+
+    private void configureGraphLivesAnimationSet() {
+        if (graphLivesAnimationSet == null) {
+            graphLivesAnimationSet = new AnimatorSet();
+        }
+        try {
+            if (graphLivesAnimationSet.isRunning()) {
+                graphLivesAnimationSet.cancel();
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void configureGraphScaleAndValues() {
+        oldGraphScaleLives = FIRST_LIVES / MAX_LIVES;
+        newGraphScaleLives = FIRST_LIVES / MAX_LIVES;
+        graphViewLives.setScaleX(newGraphScaleLives);
+    }
+
+    private void configureAndStartGraphTime() {
+        configureGraphTimeAnimationSet();
+        oldGraphScaleLivesTime = newGraphScaleLives;
+        newGraphScaleLivesTime = oldGraphScaleLivesTime - (1f / MAX_LIVES);
+        ObjectAnimator graphTimeScaleX = ObjectAnimator.ofFloat(
+                graphViewLives,
+                "ScaleX",
+                oldGraphScaleLivesTime,
+                newGraphScaleLivesTime
+        );
+        graphTimeScaleX.setDuration(MAX_TIME_FOR_ANSWER);
+        try {
+            if (graphTimeAnimationSet.isRunning()) {
+                graphTimeAnimationSet.cancel();
+            }
+        } catch (Exception ignored) {
+        }
+        graphTimeAnimationSet.playTogether(graphTimeScaleX);
+        graphTimeAnimationSet.start();
     }
 
     private int shapeOnlyId() {
@@ -381,8 +503,9 @@ public class Game1GameFragment extends Fragment {
             public void onFinish() {
                 if (gameInProgress) {
                     updateLivesIntAndStartLiveAnimation(false);
-                    setLivesAlphaAndText();
                     remainTimeLiveEditText.setText("0.0");
+                    configureAndStartGraphTime();
+                    isRemainTimeLiveFinished=true;
                     remainTimeLiveCountDownTimer.start();
                 }
             }
@@ -419,7 +542,7 @@ public class Game1GameFragment extends Fragment {
                 super.onAnimationEnd(animation);
                 if (countdownInt == 0) {
                     MainActivity.startMusic(getActivity(), R.raw.game_music1, false);
-                    configureNextMusic(GAME_MUSIC1_DURATION,R.raw.game_music2);
+                    configureNextMusic(GAME_MUSIC1_DURATION, R.raw.game_music2);
                     startGame();
                 } else {
                     countdownAnimation();
@@ -431,12 +554,12 @@ public class Game1GameFragment extends Fragment {
                 super.onAnimationStart(animation);
                 speedCountdownTextView.setText(String.valueOf(countdownInt));
                 countdownInt--;
-                if(countdownInt==2){
-                    MainActivity.startAudio(getActivity(),R.raw.cd1,false);
-                }else if(countdownInt==1){
-                    MainActivity.startAudio(getActivity(),R.raw.cd2,false);
-                }else if(countdownInt==0){
-                    MainActivity.startAudio(getActivity(),R.raw.cd3,false);
+                if (countdownInt == 2) {
+                    MainActivity.startAudio(getActivity(), R.raw.cd1, false);
+                } else if (countdownInt == 1) {
+                    MainActivity.startAudio(getActivity(), R.raw.cd2, false);
+                } else if (countdownInt == 0) {
+                    MainActivity.startAudio(getActivity(), R.raw.cd3, false);
                 }
             }
         });
@@ -463,17 +586,17 @@ public class Game1GameFragment extends Fragment {
         );
         validationResultImageViewAlpha.setDuration(GAME1_DECISION_RESULT_ANIMATION_DURATION);
 
-        ObjectAnimator validationResultImageViewScaleX=ObjectAnimator.ofFloat(
+        ObjectAnimator validationResultImageViewScaleX = ObjectAnimator.ofFloat(
                 validationResultImageView,
                 "scaleX",
-                1f,2f
+                1f, 2f
         );
         validationResultImageViewScaleX.setDuration(GAME1_DECISION_RESULT_ANIMATION_DURATION);
 
-        ObjectAnimator validationResultImageViewScaleY=ObjectAnimator.ofFloat(
+        ObjectAnimator validationResultImageViewScaleY = ObjectAnimator.ofFloat(
                 validationResultImageView,
                 "scaleY",
-                1f,2f
+                1f, 2f
         );
         validationResultImageViewScaleY.setDuration(GAME1_DECISION_RESULT_ANIMATION_DURATION);
 
@@ -525,78 +648,28 @@ public class Game1GameFragment extends Fragment {
                 break;
             }
         }
+        if(isRemainTimeLiveFinished){
+//            answer
+//                    age zaman remainTime live tamom shod pas nabayad + beshe emtiaz !
+        }
         updateLivesIntAndStartLiveAnimation(answer);
-        setLivesAlphaAndText();
         evaluateAnimationAndNextLevel(answer);
     }
 
     private void updateLivesIntAndStartLiveAnimation(boolean answer) {
+        if (!gameInProgress) return;
         if (answer) {
+            increaseOrDecreaseGraphLives(INCREASE_LIVE);
             if (livesFloat != MAX_LIVES) {
                 livesFloat++;
-                livesImageViewAnimation(INCREASE_LIVE);
             }
         } else {
-            if (livesFloat == 1) {
-                if (gameInProgress) {
-                    endGame();
-                }
-            } else {
-                livesFloat--;
-                livesImageViewAnimation(DECREASE_LIVE);
+            increaseOrDecreaseGraphLives(DECREASE_LIVE);
+            livesFloat--;
+            if (livesFloat == 0) {
+                endGame();
             }
         }
-    }
-
-    private void livesImageViewAnimation(int increaseOrDecrease) {
-        float scaleValue = 1f;
-        float alphaValue = 1f;
-        switch (increaseOrDecrease) {
-            case INCREASE_LIVE: {
-                scaleValue = 1.4f;
-                alphaValue = 0.4f;
-                break;
-            }
-            case DECREASE_LIVE: {
-                scaleValue = 0.6f;
-                alphaValue = -0.4f;
-                break;
-            }
-            default: {
-
-            }
-        }
-        ObjectAnimator livesImageViewScaleX = ObjectAnimator.ofFloat(
-                livesImageView,
-                "scaleX",
-                1f, scaleValue, 1f
-        );
-        livesImageViewScaleX.setDuration(GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION);
-
-        ObjectAnimator livesImageViewScaleY = ObjectAnimator.ofFloat(
-                livesImageView,
-                "scaleY",
-                1f, scaleValue, 1f
-        );
-        livesImageViewScaleY.setDuration(GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION);
-
-        ObjectAnimator livesImageViewAlpha = ObjectAnimator.ofFloat(
-                livesImageView,
-                "alpha",
-                (float) Math.sqrt(livesFloat / MAX_LIVES),
-                (float) Math.sqrt(livesFloat / MAX_LIVES) + alphaValue,
-                (float) Math.sqrt(livesFloat / MAX_LIVES)
-        );
-        livesImageViewAlpha.setDuration(GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION);
-
-        livesImageViewScaleX.start();
-        livesImageViewScaleY.start();
-        livesImageViewAlpha.start();
-    }
-
-    private void setLivesAlphaAndText() {
-        livesImageView.setAlpha((float) Math.sqrt(livesFloat / MAX_LIVES));
-        livesTextView.setText(String.valueOf((int) livesFloat));
     }
 
     private void setNewRandomShape() {
@@ -676,14 +749,11 @@ public class Game1GameFragment extends Fragment {
     }
 
     private void setButtonsAndClockAndLiveVisible() {
-        livesImageView.setVisibility(View.VISIBLE);
-        livesTextView.setVisibility(View.VISIBLE);
-        remainTimeImageView.setVisibility(View.VISIBLE);
         remainTimeLiveEditText.setVisibility(View.VISIBLE);
         shapeOnlyImageView.setVisibility(View.VISIBLE);
         shapeAndColorImageView.setVisibility(View.VISIBLE);
         colorOnlyImageView.setVisibility(View.VISIBLE);
         neitherImageView.setVisibility(View.VISIBLE);
-
+        graphViewLives.setVisibility(View.VISIBLE);
     }
 }

@@ -29,59 +29,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2" />
 
-    <ImageView
-        android:id="@+id/nickname_image_view"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:src="@drawable/background_input_edit_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <ImageView
-        android:id="@+id/user_name_image_view"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:src="@drawable/background_input_edit_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
-
     <EditText
         android:id="@+id/nick_name_edit_text"
         android:maxLength="16"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:background="@null"
+        android:background="@drawable/edit_text_background"
         android:gravity="center"
         android:hint="@string/nick_name_hint"
+        app:layout_constraintTop_toTopOf="@id/user_name_edit_text"
+        app:layout_constraintLeft_toLeftOf="@id/user_name_edit_text"
+        app:layout_constraintRight_toRightOf="@id/user_name_edit_text"
         android:textColor="@color/edit_text_color"
         android:textColorHint="@color/edit_text_color"
-        app:layout_constraintEnd_toEndOf="@+id/nickname_image_view"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/nickname_image_view"
-        app:layout_constraintTop_toTopOf="@+id/nickname_image_view" />
+        />
 
     <EditText
         android:id="@+id/user_name_edit_text"
         android:layout_width="200dp"
         android:maxLength="16"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:gravity="center"
-        android:background="@null"
+        android:background="@drawable/edit_text_background"
         android:hint="@string/user_name_hint"
         android:textColor="@color/edit_text_color"
         android:textColorHint="@color/edit_text_color"
-        app:layout_constraintEnd_toEndOf="@+id/user_name_image_view"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/user_name_image_view"
-        app:layout_constraintTop_toTopOf="@+id/user_name_image_view" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/sing_up_button"

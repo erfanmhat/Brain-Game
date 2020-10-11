@@ -18,6 +18,7 @@ public class ShowScoreFragment extends Fragment {
     private ImageView replayImageView;
     private TextView scoreTextView;
     private ImageView brainImageView;
+    private ImageView settingsImageView;
 
     @Nullable
     @Override
@@ -47,21 +48,38 @@ public class ShowScoreFragment extends Fragment {
         homeImageView = view.findViewById(R.id.home_image_view);
         replayImageView = view.findViewById(R.id.replay_image_view);
         brainImageView = view.findViewById(R.id.brain_image_view);
+        settingsImageView=view.findViewById(R.id.show_score_settings_image_view);
     }
 
     private void configure() {
         homeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                removeFragment();
                 MainActivity.showAppMainFragment(getActivity());
             }
         });
         replayImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.stopMusic();
+                removeFragment();
                 MainActivity.showGame1GameFragment(getActivity());
             }
         });
+        settingsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.showSettingsFragment(getActivity());
+            }
+        });
+    }
+
+    private void removeFragment() {
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 
     private void otherAnimations() {
