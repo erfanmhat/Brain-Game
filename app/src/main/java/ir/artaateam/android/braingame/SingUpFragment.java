@@ -85,10 +85,10 @@ public class SingUpFragment extends Fragment {
     private void saveUser() {
         String nicknameString = nicknameEditText.getText().toString();
         String usernameString = usernameEditText.getText().toString();
-        User user = UserPreferences.getInstance(getActivity()).getUser();
+        User user = UserPreferences.getInstance().getUser();
         user.setNickname(nicknameString);
         user.setUsername(usernameString);
-        UserPreferences.getInstance(getActivity()).putUser(user);
+        UserPreferences.getInstance().putUser(user);
     }
 
     private void WrongAnimation(EditText editText) {

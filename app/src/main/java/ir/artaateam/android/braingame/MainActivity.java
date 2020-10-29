@@ -16,9 +16,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            this.getSupportActionBar().hide();
-        } catch (NullPointerException e) {
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().hide();
         }
 
         setContentView(R.layout.activity_main);
@@ -58,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public static void showShowScoreFragment(Activity activity, int scoreInt) {
+    public static void showShowScoreFragment(Activity activity, int scoreInt,boolean isNewBestScore) {
         ShowScoreFragment showScoreFragment = new ShowScoreFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("score", scoreInt);
+        bundle.putBoolean("isNewBestScore",isNewBestScore);
         showScoreFragment.setArguments(bundle);
 
         activity.getFragmentManager()
@@ -97,14 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public static boolean getIsMusicAllowed(Activity activity) {
-        return UserPreferences.getInstance(activity).getUser().getIsMusicAllowed();
+    public static boolean getIsMusicAllowed() {
+        return UserPreferences.getInstance().getUser().getIsMusicAllowed();
     }
 
-    public static void setIsMusicAllowed(Activity activity, boolean musicAllowed) {
-        User user = UserPreferences.getInstance(activity).getUser();
+    public static void setIsMusicAllowed(boolean musicAllowed) {
+        User user = UserPreferences.getInstance().getUser();
         user.setIsMusicAllowed(musicAllowed);
-        UserPreferences.getInstance(activity).putUser(user);
+        UserPreferences.getInstance().putUser(user);
     }
 
     public static void stopMusic() {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 musicPlayer.stop();
                 musicPlayer.release();
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -123,31 +123,31 @@ public class MainActivity extends AppCompatActivity {
             musicPlayer = MediaPlayer.create(activity, res);
             musicPlayer.setLooping(loop);
             musicPlayer.start();
-            setMusicVolume(activity);
-        } catch (Exception e) {
+            setMusicVolume();
+        } catch (Exception ignored) {
         }
     }
 
-    public static void setMusicVolume(Activity activity) {
+    public static void setMusicVolume() {
         try {
-            if (MainActivity.getIsMusicAllowed(activity)) {
+            if (MainActivity.getIsMusicAllowed()) {
                 musicPlayer.setVolume(1f, 1f);
             } else {
                 musicPlayer.setVolume(0f, 0f);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
 
-    public static boolean getIsAudioAllowed(Activity activity) {
-        return UserPreferences.getInstance(activity).getUser().getIsAudioAllowed();
+    public static boolean getIsAudioAllowed() {
+        return UserPreferences.getInstance().getUser().getIsAudioAllowed();
     }
 
-    public static void setIsAudioAllowed(Activity activity, boolean AudioAllowed) {
-        User user = UserPreferences.getInstance(activity).getUser();
+    public static void setIsAudioAllowed(boolean AudioAllowed) {
+        User user = UserPreferences.getInstance().getUser();
         user.setIsAudioAllowed(AudioAllowed);
-        UserPreferences.getInstance(activity).putUser(user);
+        UserPreferences.getInstance().putUser(user);
     }
 
     public static void stopAudio() {
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 AudioPlayer.stop();
                 AudioPlayer.release();
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -166,19 +166,19 @@ public class MainActivity extends AppCompatActivity {
             AudioPlayer = MediaPlayer.create(activity, res);
             AudioPlayer.setLooping(loop);
             AudioPlayer.start();
-            setAudioVolume(activity);
-        } catch (Exception e) {
+            setAudioVolume();
+        } catch (Exception ignored) {
         }
     }
 
-    public static void setAudioVolume(Activity activity) {
+    public static void setAudioVolume() {
         try {
-            if (MainActivity.getIsAudioAllowed(activity)) {
+            if (MainActivity.getIsAudioAllowed()) {
                 AudioPlayer.setVolume(1f, 1f);
             } else {
                 AudioPlayer.setVolume(0f, 0f);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

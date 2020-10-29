@@ -19,6 +19,7 @@ public class AppFirstFragment extends Fragment {
 
     private CountDownTimer appFirstFragmentTimer;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class AppFirstFragment extends Fragment {
     }
 
     private void checkIsFirstTimePlaying() {
-        User user = UserPreferences.getInstance(getActivity()).getUser();
+        User user = UserPreferences.getInstance().getUser();
         isFirstTimePlaying = (user.getUsername().equals(""));
     }
 

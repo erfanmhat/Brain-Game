@@ -5,25 +5,24 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
+import ir.artaateam.android.braingame.app.MyApplication;
+
 public class UserPreferences {
     private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private static UserPreferences instance=null;
     private UserPreferences(Context context){
         sharedPreferences=context.getSharedPreferences("UserPreferences",Context.MODE_PRIVATE);
-        editor=sharedPreferences.edit();
     }
-    public static UserPreferences getInstance(Context context){
+    public static UserPreferences getInstance(){
         if(instance==null){
-            instance=new UserPreferences(context);
+            instance=new UserPreferences(MyApplication.getContext());
         }
         return instance;
     }
     public void putUser(User user){
         Gson gson=new Gson();
         String userJson=gson.toJson(user,User.class);
-        editor.putString("User",userJson);
-        editor.apply();
+        sharedPreferences.edit().putString("User",userJson).apply();
     }
     public User getUser(){
         Gson gson=new Gson();

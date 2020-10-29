@@ -28,7 +28,7 @@ public class AppMainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
-        User user=UserPreferences.getInstance(getActivity()).getUser();
+        User user=UserPreferences.getInstance().getUser();
         String userString="Your record : "+user.getBestScore();
         userTextView.setText(userString);
         MainActivity.startMusic(getActivity(),R.raw.music_menu,true);

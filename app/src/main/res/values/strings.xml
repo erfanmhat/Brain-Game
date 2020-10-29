@@ -12,4 +12,6 @@
     <string name="how_to_do">Don\'t know how to do</string>
     <string name="about_us">About us</string>
     <string name="quit">Quit</string>
+    <string name="new_best_score">New Record !</string>
+    <string name="step1_string">first\n game show a random shape with a random color\n you must memorize both \n shape and color for next </string>
 </resources>

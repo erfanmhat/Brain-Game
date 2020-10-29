@@ -23,10 +23,20 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_text"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@id/home_image_view"
+        app:layout_constraintBottom_toTopOf="@id/new_best_score_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/brain_image_view" />
+    <TextView
+        android:id="@+id/new_best_score_text_view"
+        android:layout_width="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@color/black_text"
+        app:layout_constraintTop_toBottomOf="@id/scores_text_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/home_image_view"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/brain_image_view"
@@ -43,7 +53,7 @@
         android:id="@+id/home_image_view"
         android:src="@drawable/home_button"
         android:layout_width="@dimen/image_view_button"
-        app:layout_constraintTop_toBottomOf="@id/scores_text_view"
+        app:layout_constraintTop_toBottomOf="@id/new_best_score_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/replay_image_view"

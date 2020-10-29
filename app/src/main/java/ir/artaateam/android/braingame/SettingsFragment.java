@@ -53,7 +53,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setMusicImageView() {
-        if (MainActivity.getIsMusicAllowed(getActivity())) {
+        if (MainActivity.getIsMusicAllowed()) {
             musicImageView.setImageResource(R.drawable.music_is_on);
         } else {
             musicImageView.setImageResource(R.drawable.music_is_off);
@@ -61,7 +61,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setAudioImageView() {
-        if (MainActivity.getIsAudioAllowed(getActivity())) {
+        if (MainActivity.getIsAudioAllowed()) {
             audioImageView.setImageResource(R.drawable.audio_is_on);
         } else {
             audioImageView.setImageResource(R.drawable.audio_is_off);
@@ -72,18 +72,18 @@ public class SettingsFragment extends Fragment {
         musicImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.setIsMusicAllowed(getActivity(), !(MainActivity.getIsMusicAllowed(getActivity())));
+                MainActivity.setIsMusicAllowed(!(MainActivity.getIsMusicAllowed()));
                 setMusicImageView();
-                MainActivity.setMusicVolume(getActivity());
+                MainActivity.setMusicVolume();
             }
         });
 
         audioImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.setIsAudioAllowed(getActivity(), !(MainActivity.getIsAudioAllowed(getActivity())));
+                MainActivity.setIsAudioAllowed(!(MainActivity.getIsAudioAllowed()));
                 setAudioImageView();
-                MainActivity.setAudioVolume(getActivity());
+                MainActivity.setAudioVolume();
             }
         });
 

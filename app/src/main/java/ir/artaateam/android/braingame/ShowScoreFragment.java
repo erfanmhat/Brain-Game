@@ -19,6 +19,7 @@ public class ShowScoreFragment extends Fragment {
     private TextView scoreTextView;
     private ImageView brainImageView;
     private ImageView settingsImageView;
+    private TextView newBestScoreTextView;
 
     @Nullable
     @Override
@@ -32,7 +33,8 @@ public class ShowScoreFragment extends Fragment {
         findViews(view);
         configure();
         setScoreTextView();
-        scoreAnimation();
+        setBestScoreTextView();
+        scoreAndNewBestScoreAnimation();
         MainActivity.startMusic(getActivity(), R.raw.music_show_score, false);
         otherAnimations();
     }
@@ -48,7 +50,8 @@ public class ShowScoreFragment extends Fragment {
         homeImageView = view.findViewById(R.id.home_image_view);
         replayImageView = view.findViewById(R.id.replay_image_view);
         brainImageView = view.findViewById(R.id.brain_image_view);
-        settingsImageView=view.findViewById(R.id.show_score_settings_image_view);
+        settingsImageView = view.findViewById(R.id.show_score_settings_image_view);
+        newBestScoreTextView = view.findViewById(R.id.new_best_score_text_view);
     }
 
     private void configure() {
@@ -80,6 +83,12 @@ public class ShowScoreFragment extends Fragment {
                 .beginTransaction()
                 .remove(this)
                 .commit();
+    }
+
+    private void setBestScoreTextView() {
+        if (getArguments().getBoolean("isNewBestScore", false)) {
+            newBestScoreTextView.setText(R.string.new_best_score);
+        }
     }
 
     private void otherAnimations() {
@@ -132,7 +141,7 @@ public class ShowScoreFragment extends Fragment {
         scoreTextView.setText(getString(R.string.speed_final_score, scoreInt));
     }
 
-    private void scoreAnimation() {
+    private void scoreAndNewBestScoreAnimation() {
         ObjectAnimator scoresX = ObjectAnimator.ofFloat(
                 scoreTextView,
                 "scaleX",
@@ -164,5 +173,37 @@ public class ShowScoreFragment extends Fragment {
         );
         scoresRotate.setDuration(SCORE_ANIMATION_DURATION);
         scoresRotate.start();
+        //========================================================
+        ObjectAnimator newBestScoresX = ObjectAnimator.ofFloat(
+                newBestScoreTextView,
+                "scaleX",
+                0f, 1.2f
+        );
+        newBestScoresX.setDuration(SCORE_ANIMATION_DURATION);
+        newBestScoresX.start();
+
+        ObjectAnimator newBestScoresY = ObjectAnimator.ofFloat(
+                newBestScoreTextView,
+                "scaleY",
+                0f, 1.2f
+        );
+        newBestScoresY.setDuration(SCORE_ANIMATION_DURATION);
+        newBestScoresY.start();
+
+        ObjectAnimator newBestScoresRotateX = ObjectAnimator.ofFloat(
+                newBestScoreTextView,
+                "RotationX",
+                0f, 720f
+        );
+        newBestScoresRotateX.setDuration(SCORE_ANIMATION_DURATION);
+        newBestScoresRotateX.start();
+
+        ObjectAnimator newBestScoresRotate = ObjectAnimator.ofFloat(
+                newBestScoreTextView,
+                "Rotation",
+                0f, 360f
+        );
+        newBestScoresRotate.setDuration(SCORE_ANIMATION_DURATION);
+        newBestScoresRotate.start();
     }
 }
