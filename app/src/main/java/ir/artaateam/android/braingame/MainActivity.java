@@ -1,10 +1,14 @@
 package ir.artaateam.android.braingame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import com.google.android.material.tabs.TabLayout;
 
 import ir.artaateam.android.braingame.game1.Game1GameFragment;
 
@@ -12,17 +16,25 @@ public class MainActivity extends AppCompatActivity {
     private static MediaPlayer musicPlayer;
     private static MediaPlayer AudioPlayer;
 
+    private static TabLayout storeTabLayout;
+    private static ViewPager storeViewPager;
+    private static StoreFragmentPagerAdapter storeFragmentPagerAdapter;
+    private static FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
         if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
         }
 
-        setContentView(R.layout.activity_main);
-
+        findViews();
         showGameFirstFragment(MainActivity.this);
+        fragmentManager=getSupportFragmentManager();
+    }
+    private void findViews(){
+        storeTabLayout= findViewById(R.id.store_tab_layout);
+        storeViewPager= findViewById(R.id.store_view_pager);
     }
 
     public static void showGameFirstFragment(Activity activity) {
@@ -33,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public static void showStoreFragments(){
+        storeFragmentPagerAdapter=new StoreFragmentPagerAdapter(fragmentManager);
+        storeViewPager.setAdapter(storeFragmentPagerAdapter);
+        storeTabLayout.setupWithViewPager(storeViewPager);
+    }
     public static void showAppMainFragment(Activity activity) {
         AppMainFragment appMainFragment = new AppMainFragment();
         activity.getFragmentManager()
@@ -93,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
         activity.getFragmentManager()
                 .beginTransaction()
                 .add(R.id.settings_frame, settingsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showItemsAnimationFragment() {
+        ItemsAnimationFragment itemsAnimationFragment = new ItemsAnimationFragment();
+
+                getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.app_main_frame, itemsAnimationFragment,null)
                 .addToBackStack(null)
                 .commit();
     }

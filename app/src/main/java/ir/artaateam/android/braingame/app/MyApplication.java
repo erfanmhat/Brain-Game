@@ -15,4 +15,5 @@ public class MyApplication extends Application {
     public static Context getContext(){
         return context;
     }
+
 }

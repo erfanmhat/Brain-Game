@@ -6,17 +6,30 @@ public class User {
     private int bestScore;
     private boolean isMusicAllowed = true;
     private boolean isAudioAllowed = true;
-
+    private int gem;
+    private int coin;
     User() {
         username = "";
         nickname = "";
         bestScore = 0;
+        gem=0;
+        coin=0;
     }
 
-    User(String username, String nickname, int bestScore) {
-        this.username = username;
-        this.nickname = nickname;
-        this.bestScore = bestScore;
+    public int getGem() {
+        return gem;
+    }
+
+    public void setGem(int gem) {
+        this.gem = gem;
+    }
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
     }
 
     public void setUsername(String username) {

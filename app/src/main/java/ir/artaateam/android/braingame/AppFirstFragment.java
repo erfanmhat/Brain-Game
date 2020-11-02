@@ -18,8 +18,7 @@ public class AppFirstFragment extends Fragment {
     TextView progressTextView;
 
     private CountDownTimer appFirstFragmentTimer;
-
-
+    
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

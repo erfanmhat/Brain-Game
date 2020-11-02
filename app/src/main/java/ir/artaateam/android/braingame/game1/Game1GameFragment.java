@@ -15,14 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import java.util.Random;
 
 import ir.artaateam.android.braingame.EvaluateImage;
+import ir.artaateam.android.braingame.ItemsAnimationFragment;
 import ir.artaateam.android.braingame.MainActivity;
 import ir.artaateam.android.braingame.R;
 import ir.artaateam.android.braingame.User;
@@ -32,7 +34,6 @@ import ir.artaateam.android.braingame.app.MyApplication;
 public class Game1GameFragment extends Fragment {
     private int GAME1_SLIDE_ANIMATION_DURATION = Game1AnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
     private int GAME1_DECISION_RESULT_ANIMATION_DURATION = Game1AnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
-    private int GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION = Game1AnimationValues.GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX;
 
 
     private int MAX_TIME_FOR_ANSWER_MAX = 5000;
@@ -195,11 +196,6 @@ public class Game1GameFragment extends Fragment {
                 (int) (hardeningCoefficientAccordingToScoreInt() *
                         Game1AnimationValues.
                                 GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX);
-
-        GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION =
-                (int) (hardeningCoefficientAccordingToScoreInt() *
-                        Game1AnimationValues.
-                                GAME1_INCREASE_OR_DECREASE_LIVES_ANIMATION_DURATION_MAX);
     }
 
     private void decreaseMaxTimeForAnswer() {
@@ -411,6 +407,10 @@ public class Game1GameFragment extends Fragment {
             @Override
             public void onTick(long l) {
                 //0 -> ... -> 1
+                //#######################################
+                countdownTextView.setAlpha(1f);
+                countdownTextView.setText("your point : "+scoreInt+"\nlives : "+livesFloat);
+                //#######################################
                 float coefficientOfDecreaseLivesProgressbarProgress =
                         ((MAX_TIME_FOR_ANSWER - (float) l) / MAX_TIME_FOR_ANSWER);
 
@@ -491,7 +491,6 @@ public class Game1GameFragment extends Fragment {
     }
 
     private void setEvaluate(boolean answer) {
-
 
         if (answer) {
             validationResultImageView.setImageResource(

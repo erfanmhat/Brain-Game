@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background"
     android:clickable="true">
 
@@ -19,11 +19,129 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/store_button"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/gem_background_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:src="@drawable/coin_and_gem_background"
+                app:layout_constraintLeft_toLeftOf="@id/gem_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/gem_image_view"
+                android:layout_width="@dimen/coin_and_gem_size"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:src="@drawable/gem"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/gem_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="123"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/coin_and_gem_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/gem_background_image_view"
+                app:layout_constraintLeft_toRightOf="@id/gem_image_view"
+                app:layout_constraintTop_toTopOf="@id/gem_background_image_view" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_circle_24"
+                app:layout_constraintBottom_toBottomOf="@id/gem_background_image_view"
+                app:layout_constraintRight_toRightOf="@id/gem_background_image_view"
+                app:layout_constraintTop_toTopOf="@id/gem_background_image_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+
+            <ImageView
+                android:id="@+id/coin_background_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:src="@drawable/coin_and_gem_background"
+                app:layout_constraintLeft_toLeftOf="@id/coin_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/coin_image_view"
+                android:layout_width="@dimen/coin_and_gem_size"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:src="@drawable/coin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/coin_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="12345"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/coin_and_gem_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/coin_background_image_view"
+                app:layout_constraintLeft_toRightOf="@id/coin_image_view"
+                app:layout_constraintTop_toTopOf="@id/coin_background_image_view" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_circle_24"
+                app:layout_constraintBottom_toBottomOf="@id/coin_background_image_view"
+                app:layout_constraintRight_toRightOf="@id/coin_background_image_view"
+                app:layout_constraintTop_toTopOf="@id/coin_background_image_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="@dimen/settings_icon"
+        android:layout_height="@dimen/settings_icon"
+        android:layout_margin="10dp"
+        android:background="@drawable/settings_icon"
+        android:foreground="?selectableItemBackground"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/store_button"
+        android:layout_width="@dimen/settings_icon"
+        android:layout_height="@dimen/settings_icon"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_round_local_grocery_store_24"
+        android:foreground="?selectableItemBackground"
+        app:layout_constraintRight_toLeftOf="@id/settings_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/start_game1_image_view"
         android:layout_width="@dimen/play_button"
         android:layout_height="@dimen/play_button"
-        android:src="@drawable/play_button"
+        android:background="@drawable/play_button"
+        android:foreground="?selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,14 +158,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7" />
-
-    <ImageView
-        android:id="@+id/settings_image_view"
-        android:layout_width="@dimen/settings_icon"
-        android:src="@drawable/settings_icon"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="@dimen/settings_margin"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:layout_height="@dimen/settings_icon"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

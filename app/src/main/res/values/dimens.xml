@@ -7,11 +7,14 @@
     <dimen name="live_and_clock_xy">50dp</dimen>
     <dimen name="settings_margin">15dp</dimen>
     <dimen name="settings_text_size">30sp</dimen>
-    <dimen name="settings_button_width">50sp</dimen>
-    <dimen name="settings_button_height">50sp</dimen>
+
     <dimen name="settings_icon">30sp</dimen>
     <dimen name="graph_x">650dp</dimen>
     <dimen name="graph_y">30dp</dimen>
     <dimen name="edit_text_width">300dp</dimen>
     <dimen name="edit_text_height">30dp</dimen>
+    <dimen name="coin_and_gem_size">30dp</dimen>
+    <dimen name="coin_and_gem_radius">15dp</dimen>
+    <dimen name="coin_and_gem_background_width">150dp</dimen>
+    <dimen name="coin_and_gem_text_size">25sp</dimen>
 </resources>
