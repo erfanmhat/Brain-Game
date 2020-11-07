@@ -6,6 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import ir.artaateam.android.braingame.Fragments.CoinStoreFragment;
+import ir.artaateam.android.braingame.Fragments.FreeStoreFragment;
+import ir.artaateam.android.braingame.Fragments.GemStoreFragment;
+import ir.artaateam.android.braingame.Fragments.ItemsStoreFragment;
+
 public class StoreFragmentPagerAdapter extends FragmentPagerAdapter {
     String[] items={"gem","coin","items","free"};
     public StoreFragmentPagerAdapter(@NonNull FragmentManager fm) {
@@ -15,22 +20,14 @@ public class StoreFragmentPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0: {
-                return new GemStoreFragment();
-            }
-            case 1:{
-                return new CoinStoreFragment();
-            }
-            case 2:{
-                return new ItemsStoreFragment();
-            }
-            case 3:{
-                return new FreeStoreFragment();
-            }
-            default:{
-                return new GemStoreFragment();
-            }
+        if (position == 0) {
+            return new GemStoreFragment();
+        } else if (position == 1) {
+            return new CoinStoreFragment();
+        } else if (position == 2) {
+            return new ItemsStoreFragment();
+        } else {
+            return new FreeStoreFragment();
         }
     }
 

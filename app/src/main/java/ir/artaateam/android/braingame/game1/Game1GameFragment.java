@@ -17,16 +17,15 @@ import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import java.util.Random;
 
 import ir.artaateam.android.braingame.EvaluateImage;
-import ir.artaateam.android.braingame.ItemsAnimationFragment;
 import ir.artaateam.android.braingame.MainActivity;
 import ir.artaateam.android.braingame.R;
+import ir.artaateam.android.braingame.RandomShapeAndColor;
 import ir.artaateam.android.braingame.User;
 import ir.artaateam.android.braingame.UserPreferences;
 import ir.artaateam.android.braingame.app.MyApplication;
@@ -89,7 +88,6 @@ public class Game1GameFragment extends Fragment {
     private boolean gameInProgress = false;
     private boolean isRemainTimeLiveCountDownTimerStarted = false;
     private boolean isMusicTimerStarted = false;
-    private boolean isRemainTimeLiveFinished = false;
     private boolean isNewBestScore=false;
 
     private ImageView shapeOnlyImageView;
@@ -122,6 +120,10 @@ public class Game1GameFragment extends Fragment {
         findViews(view);
         configure();
         generateFirstLevelAndStartTimer();
+        //ImageView imageView;
+        //Drawable drawable;
+        //drawable.setTint(R.color.shape_blue_color);
+        //imageView.setImageDrawable(drawable);
     }
 
     @Override
@@ -429,7 +431,6 @@ public class Game1GameFragment extends Fragment {
                 if (gameInProgress) {
                     updateLivesIntAndStartLiveAnimation(false);
                     remainTimeLiveEditText.setText("0.0");
-                    isRemainTimeLiveFinished = true;
                     remainTimeLiveCountDownTimer.start();
                 }
             }
@@ -582,10 +583,6 @@ public class Game1GameFragment extends Fragment {
                 }
                 break;
             }
-        }
-        if (isRemainTimeLiveFinished) {
-//            answer
-//                    age zaman remainTime live tamom shod pas nabayad + beshe emtiaz !
         }
         updateLivesIntAndStartLiveAnimation(answer);
         evaluateAnimationAndNextLevel(answer);
