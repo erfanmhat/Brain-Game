@@ -11,15 +11,13 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-import ir.artaateam.android.braingame.MainActivity;
-import ir.artaateam.android.braingame.MainUtilValues;
+import ir.artaateam.android.braingame.App.Data;
+import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;
-import ir.artaateam.android.braingame.User;
-import ir.artaateam.android.braingame.UserPreferences;
 
 public class SingUpFragment extends Fragment {
-    EditText usernameEditText;
-    EditText nicknameEditText;
+    final static int DELAY_WRONG_INPUT_EDIT_TEXT = 400;
+    EditText nameEditText;
     ImageView singUpButton;
     ImageView settingsImageView;
 
@@ -40,49 +38,35 @@ public class SingUpFragment extends Fragment {
         configure();
     }
 
+    @Override
+    public void onPause() {
+        removeFragment();
+        super.onPause();
+    }
+
     private void findViews(View view) {
-        usernameEditText = view.findViewById(R.id.user_name_edit_text);
-        nicknameEditText = view.findViewById(R.id.nick_name_edit_text);
+        nameEditText = view.findViewById(R.id.nick_name_edit_text);
         singUpButton = view.findViewById(R.id.sing_up_button);
-        settingsImageView= view.findViewById(R.id.sing_up_settings_image_view);
+        settingsImageView = view.findViewById(R.id.sing_up_settings_image_view);
     }
 
     private void configure() {
-        singUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                singUpImageButtonOnClick();
-            }
-        });
-
-        settingsImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.showSettingsFragment(getActivity());
-            }
-        });
+        singUpButton.setOnClickListener(view -> singUpImageButtonOnClick());
+        settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
     }
 
     private void singUpImageButtonOnClick() {
-        String usernameString = usernameEditText.getText().toString();
-        if (usernameString.isEmpty() ||
-                usernameString.length() < 3 ||
-                usernameString.contains("  ")) {
-            WrongAnimation(usernameEditText);
-            return;
-        }
-
-        String nicknameString = nicknameEditText.getText().toString();
+        String nicknameString = nameEditText.getText().toString();
         if (nicknameString.isEmpty() ||
                 nicknameString.length() < 3 ||
                 nicknameString.contains("  ")) {
-            WrongAnimation(nicknameEditText);
+            WrongAnimation(nameEditText);
             return;
         }
 
         saveUser();
         removeFragment();
-        MainActivity.showAppMainFragment(getActivity());
+        FragmentController.showAppMainFragment(getActivity());
     }
 
     private void removeFragment() {
@@ -93,12 +77,7 @@ public class SingUpFragment extends Fragment {
     }
 
     private void saveUser() {
-        String nicknameString = nicknameEditText.getText().toString();
-        String usernameString = usernameEditText.getText().toString();
-        User user = UserPreferences.getInstance().getUser();
-        user.setNickname(nicknameString);
-        user.setUsername(usernameString);
-        UserPreferences.getInstance().putUser(user);
+        Data.setName(nameEditText.getText().toString());
     }
 
     private void WrongAnimation(EditText editText) {
@@ -108,21 +87,21 @@ public class SingUpFragment extends Fragment {
                 "TranslationX",
                 0f, 20f, 0f, -20f, 0f, 20f, 0f, -20f, 0f
         );
-        editTextTranslationX.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
+        editTextTranslationX.setDuration(DELAY_WRONG_INPUT_EDIT_TEXT);
 
         ObjectAnimator editTextScaleX = ObjectAnimator.ofFloat(
                 editText,
                 "scaleX",
                 1f, 1.5f, 1f
         );
-        editTextScaleX.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
+        editTextScaleX.setDuration(DELAY_WRONG_INPUT_EDIT_TEXT);
 
         ObjectAnimator editTextScaleY = ObjectAnimator.ofFloat(
                 editText,
                 "scaleY",
                 1f, 1.5f, 1f
         );
-        editTextScaleY.setDuration(MainUtilValues.DELAY_WRONG_INPUT_EDIT_TEXT);
+        editTextScaleY.setDuration(DELAY_WRONG_INPUT_EDIT_TEXT);
 
         editTextTranslationX.start();
         editTextScaleX.start();

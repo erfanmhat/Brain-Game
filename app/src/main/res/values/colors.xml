@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3D1363</color>
-    <color name="colorPrimaryDark">#340454</color>
-    <color name="colorAccent">#573383</color>
-    <color name="game_main_color">#471860</color>
-    <color name="white_text">#ffffff</color>
-    <color name="black_text">#000000</color>
-    <color name="red_text">#E40C0C</color>
-    <color name="edit_text_color">#888392</color>
-    <color name="game_pink">#ff898d</color>
-    <color name="pink_black">#dd676b</color>
-    <color name="progress_background">#22000000</color>
+    <color name="game_main_color">#304FFE</color>
+    <color name="white_text_color">#ffffff</color>
+    <color name="black_text_color">#000000</color>
+    <color name="game_pink_color">#ff898d</color>
+    <color name="pink_black_color">#dd676b</color>
+    <color name="progress_background_color">#22000000</color>
     <color name="shape_purple_color">#9400D3</color>
     <color name="shape_indigo_color">#4B0082</color>
     <color name="shape_blue_color">#0000FF</color>
@@ -18,4 +13,12 @@
     <color name="shape_yellow_color">#FFFF00</color>
     <color name="shape_orange_color">#FF7F00</color>
     <color name="shape_red_color">#FF0000</color>
+    <color name="invisible_color">#00000000</color>
+    <color name="background_color">#0097A7</color>
+    <color name="add_circle_color">#471860</color>
+    <color name="buttons_background_color">#283593</color>
+    <color name="games_template_background_color">#0D47A1</color>
+    <color name="games_template_stroke_and_level_color">#1A237E</color>
+    <color name="white_edit_text_background_color">#DCDCDC</color>
+    <color name="edit_text_hint_color">#4D4D4D</color>
 </resources>

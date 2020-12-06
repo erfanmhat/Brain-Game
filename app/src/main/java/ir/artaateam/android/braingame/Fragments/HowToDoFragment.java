@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import ir.artaateam.android.braingame.R;
-
+// TODO add game guide
 public class HowToDoFragment extends Fragment {
     public HowToDoFragment() {
         super();

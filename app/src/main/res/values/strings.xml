@@ -1,17 +1,18 @@
 <resources>
-    <string name="app_name">Brain Game</string>
-    <string name="speed_final_score">Your final score : %d</string>
-    <string name="neither">non</string>
-    <string name="shape_and_color">both</string>
-    <string name="color_only">color</string>
-    <string name="shape_only">shape</string>
-    <string name="user_name_hint">username</string>
-    <string name="nick_name_hint">nickname</string>
+    <string name="simple_string">simple string</string>
+    <string name="simple_int">1234</string>
+    <string name="app_name">Brain\nGame</string>
+    <string name="speed_final_score">Your final score : %d </string>
+    <string name="non_button_text">non</string>
+    <string name="both_button_text">both</string>
+    <string name="color_button_text">color</string>
+    <string name="shape_button_text">shape</string>
+    <string name="name">name</string>
     <string name="sing_up">sing up</string>
-    <string name="loading">Loading</string>
     <string name="how_to_do">Don\'t know how to do</string>
     <string name="about_us">About us</string>
     <string name="quit">Quit</string>
     <string name="new_best_score">New Record !</string>
+    <string name="game_condition_template">your point : %d\nlives : %d</string>
     <string name="step1_string">first\n game show a random shape with a random color\n you must memorize both \n shape and color for next </string>
 </resources>

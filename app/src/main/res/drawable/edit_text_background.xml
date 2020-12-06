@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/game_main_color"/>
+    <solid android:color="@color/white_edit_text_background_color"/>
     <corners android:radius="40dp"/>
-    <stroke android:color="@color/black_text"
-        android:width="2dp"/>
+    <stroke android:color="@color/game_main_color"
+        android:width="3dp"/>
     <size android:width="@dimen/edit_text_width" android:height="@dimen/edit_text_height"/>
 </shape>

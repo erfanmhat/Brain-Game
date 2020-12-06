@@ -19,14 +19,12 @@ public class CoinStoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.coin_store_fragment, container, false);
     }
-
+// TODO add store coin items
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
-        ImageView mImgCheck =view.findViewById(R.id.imageView);
-        ((Animatable) mImgCheck.getDrawable()).start();
     }
 
     private void findViews(View view) {

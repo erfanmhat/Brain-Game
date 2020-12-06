@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:clickable="true"
     android:focusable="true">
 
@@ -12,19 +10,21 @@
         android:id="@+id/background_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@drawable/background"
+        android:src="@color/background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/gem_and_coin_linear_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:baselineAligned="false"
+
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/store_image_view"
@@ -60,8 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:contentDescription="@string/app_name"
-                android:text="123"
-                android:textColor="@color/black_text"
+                android:text="@string/simple_int"
+                android:textColor="@color/black_text_color"
                 android:textSize="@dimen/coin_and_gem_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/gem_background_image_view"
                 app:layout_constraintLeft_toRightOf="@id/gem_image_view"
@@ -69,7 +69,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 app:layout_constraintBottom_toBottomOf="@id/gem_background_image_view"
                 app:layout_constraintRight_toRightOf="@id/gem_background_image_view"
@@ -105,8 +105,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:text="12345"
-                android:textColor="@color/black_text"
+                android:text="@string/simple_int"
+                android:textColor="@color/black_text_color"
                 android:textSize="@dimen/coin_and_gem_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/coin_background_image_view"
                 app:layout_constraintLeft_toRightOf="@id/coin_image_view"
@@ -124,46 +124,57 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/settings_button"
         android:layout_width="@dimen/settings_icon"
         android:layout_height="@dimen/settings_icon"
+        app:tint="@color/black_text_color"
         android:layout_margin="10dp"
-        android:background="@drawable/settings_icon"
-        android:foreground="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_round_settings_24"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/app_name" />
 
     <ImageView
         android:id="@+id/store_image_view"
         android:layout_width="@dimen/settings_icon"
         android:layout_height="@dimen/settings_icon"
         android:layout_margin="10dp"
-        app:srcCompat="@drawable/ic_round_local_grocery_store_24"
+        android:contentDescription="@string/app_name"
         app:layout_constraintRight_toLeftOf="@id/settings_button"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/app_name" />
+        app:srcCompat="@drawable/ic_round_local_grocery_store_24"
+        app:tint="#000000" />
 
-    <Button
-        android:id="@+id/start_game1_image_view"
-        android:layout_width="@dimen/play_button"
-        android:layout_height="@dimen/play_button"
-        android:background="@drawable/play_button"
-        android:foreground="?selectableItemBackground"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/gem_and_coin_linear_layout">
 
-    <TextView
-        android:id="@+id/user_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black_text"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        <TextView
+            android:id="@+id/game_level_1"
+            style="@style/game_levels"
+            android:text="@string/simple_string" />
+
+        <TextView
+            android:id="@+id/game_level_2"
+            style="@style/game_levels"
+            android:text="@string/simple_string" />
+
+        <TextView
+            android:id="@+id/game_level_3"
+            style="@style/game_levels"
+            android:text="@string/simple_string" />
+
+        <TextView
+            android:id="@+id/game_level_4"
+            style="@style/game_levels"
+            android:text="@string/simple_string" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

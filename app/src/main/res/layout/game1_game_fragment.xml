@@ -3,36 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:clickable="true"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/background_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@drawable/background"
+        android:src="@color/background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
         android:id="@+id/lives_progressbar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/pause_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/pause_button"
+        android:layout_width="@dimen/image_view_button"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_height="50dp"
-        android:layout_width="match_parent" />
-
+        app:srcCompat="@drawable/ic_round_pause_24"
+        android:layout_height="@dimen/image_view_button"
+        android:contentDescription="@string/app_name" />
     <TextView
         android:id="@+id/countdown_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black_text"
+        android:textColor="@color/black_text_color"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/shape_image_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,7 +50,6 @@
 
     <ImageView
         android:id="@+id/shape_image_view"
-        android:src="@drawable/red_oval"
         android:layout_width="250dp"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,97 +62,95 @@
         android:id="@+id/validation_result_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@id/shape_image_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/shape_image_view"
         tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/shape_only_button"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/rounded_button"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        style="@style/game_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/color_only_button"/>
+        app:layout_constraintRight_toLeftOf="@id/color_only_button" />
 
     <TextView
+        android:id="@+id/shape_button_text_view"
         android:layout_width="wrap_content"
-        android:text="@string/shape_only"
-        android:textColor="@color/white_text"
-        app:layout_constraintTop_toTopOf="@id/shape_only_button"
+        android:layout_height="wrap_content"
+        android:text="shape "
+        android:textColor="@color/white_text_color"
+        android:textSize="@dimen/buttons_text_size"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/shape_only_button"
         app:layout_constraintLeft_toLeftOf="@id/shape_only_button"
         app:layout_constraintRight_toRightOf="@id/shape_only_button"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="@id/shape_only_button" />
 
     <ImageView
         android:id="@+id/color_only_button"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/rounded_button"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        style="@style/game_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/shape_only_button"
-        app:layout_constraintRight_toLeftOf="@id/shape_and_color_button"/>
+        app:layout_constraintRight_toLeftOf="@id/shape_and_color_button" />
 
     <TextView
+        android:id="@+id/color_button_text_view"
         android:layout_width="wrap_content"
-        android:text="@string/color_only"
-        android:textColor="@color/white_text"
-        app:layout_constraintTop_toTopOf="@id/color_only_button"
+        android:layout_height="wrap_content"
+        android:text="color "
+        android:textColor="@color/white_text_color"
+        android:textSize="@dimen/buttons_text_size"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/color_only_button"
         app:layout_constraintLeft_toLeftOf="@id/color_only_button"
         app:layout_constraintRight_toRightOf="@id/color_only_button"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="@id/color_only_button" />
+
     <ImageView
         android:id="@+id/shape_and_color_button"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/rounded_button"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        style="@style/game_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/color_only_button"
-        app:layout_constraintRight_toLeftOf="@id/neither_button"/>
+        app:layout_constraintRight_toLeftOf="@id/neither_button" />
 
     <TextView
+        android:id="@+id/both_button_text_view"
         android:layout_width="wrap_content"
-        android:textColor="@color/white_text"
-        android:text="@string/shape_and_color"
-        app:layout_constraintTop_toTopOf="@id/shape_and_color_button"
+        android:layout_height="wrap_content"
+        android:text="both "
+        android:textColor="@color/white_text_color"
+        android:textSize="@dimen/buttons_text_size"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/shape_and_color_button"
         app:layout_constraintLeft_toLeftOf="@id/shape_and_color_button"
         app:layout_constraintRight_toRightOf="@id/shape_and_color_button"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="@id/shape_and_color_button" />
+
     <ImageView
         android:id="@+id/neither_button"
-        android:visibility="invisible"
-        android:layout_width="0dp"
-        android:src="@drawable/rounded_button"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        style="@style/game_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/shape_and_color_button"/>
+        app:layout_constraintLeft_toRightOf="@id/shape_and_color_button"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
+        android:id="@+id/non_button_text_view"
         android:layout_width="wrap_content"
-        android:text="@string/neither"
-        android:textColor="@color/white_text"
-        app:layout_constraintTop_toTopOf="@id/neither_button"
+        android:layout_height="wrap_content"
+        android:text="non "
+        android:textColor="@color/white_text_color"
+        android:textSize="@dimen/buttons_text_size"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/neither_button"
         app:layout_constraintLeft_toLeftOf="@id/neither_button"
         app:layout_constraintRight_toRightOf="@id/neither_button"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="@id/neither_button" />
 
     <TextView
         android:id="@+id/remain_time_live_edit_text"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import ir.artaateam.android.braingame.R;
-
+// TODO :)
 public class AboutUsFragment extends Fragment {
     public AboutUsFragment() {
         super();

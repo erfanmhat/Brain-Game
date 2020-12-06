@@ -2,6 +2,7 @@ package ir.artaateam.android.braingame.Fragments;
 
 import android.animation.ObjectAnimator;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,16 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import ir.artaateam.android.braingame.MainActivity;
+import ir.artaateam.android.braingame.App.Data;
+import ir.artaateam.android.braingame.Controllers.FragmentController;
+import ir.artaateam.android.braingame.Controllers.MusicController;
 import ir.artaateam.android.braingame.R;
+import ir.artaateam.android.braingame.App.MyApplication;
 
 public class ShowScoreFragment extends Fragment {
     public final static int SCORE_ANIMATION_DURATION = 2000;
+
+    int scoreInt;
 
     private ImageView homeImageView;
     private ImageView replayImageView;
@@ -39,16 +45,19 @@ public class ShowScoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
+        getScoreIntFromBundle();
+        rewardToPlayer();
         setScoreTextView();
         setBestScoreTextView();
         scoreAndNewBestScoreAnimation();
-        MainActivity.startMusic(getActivity(), R.raw.music_show_score, false);
+        MusicController.startMusic(getActivity(), R.raw.music_show_score, false);
         otherAnimations();
     }
 
     @Override
     public void onPause() {
-        MainActivity.stopMusic();
+        removeFragment();
+        MusicController.stopMusic();
         super.onPause();
     }
 
@@ -62,27 +71,40 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void configure() {
-        homeImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeFragment();
-                MainActivity.showAppMainFragment(getActivity());
-            }
+        setFont();
+        homeImageView.setOnClickListener(view -> {
+            MusicController.stopMusic();
+            removeFragment();
+            FragmentController.showAppMainFragment(getActivity());
         });
-        replayImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.stopMusic();
-                removeFragment();
-                MainActivity.showGame1GameFragment(getActivity());
-            }
+        replayImageView.setOnClickListener(view -> {
+            MusicController.stopMusic();
+            removeFragment();
+            FragmentController.showGame1GameFragment(getActivity());
         });
-        settingsImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.showSettingsFragment(getActivity());
-            }
-        });
+        settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
+    }
+
+    private void rewardToPlayer(){
+        int coinInt=Data.getCoin()+scoreInt;
+        int gemInt=Data.getGem()+scoreInt/10;
+        Data.setCoin(coinInt);
+        Data.setGem(gemInt);
+    }
+
+    private void getScoreIntFromBundle(){
+        Bundle bundle;
+        bundle = getArguments();
+        scoreInt = bundle.getInt("score");
+    }
+
+    private void setFont(){
+        Typeface font=Typeface.createFromAsset(
+                MyApplication.getContext().getAssets(),
+                MyApplication.main.GAME_MAIN_FONT_PATH
+        );
+        scoreTextView.setTypeface(font);
+        newBestScoreTextView.setTypeface(font);
     }
 
     private void removeFragment() {
@@ -94,7 +116,8 @@ public class ShowScoreFragment extends Fragment {
 
     private void setBestScoreTextView() {
         if (getArguments().getBoolean("isNewBestScore", false)) {
-            newBestScoreTextView.setText(R.string.new_best_score);
+            String recordString=getString(R.string.new_best_score)+" ";
+            newBestScoreTextView.setText(recordString);
         }
     }
 
@@ -142,10 +165,8 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void setScoreTextView() {
-        Bundle bundle;
-        bundle = getArguments();
-        int scoreInt = bundle.getInt("score");
-        scoreTextView.setText(getString(R.string.speed_final_score, scoreInt));
+        String scoreString=getString(R.string.speed_final_score, scoreInt)+" ";
+        scoreTextView.setText(scoreString);
     }
 
     private void scoreAndNewBestScoreAnimation() {
