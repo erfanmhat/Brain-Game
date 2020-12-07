@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/background_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-         android:background="@color/background_color"
+        android:background="@color/background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -26,21 +26,111 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/brain_image_view" />
+
     <TextView
         android:id="@+id/new_best_score_text_view"
         android:layout_width="wrap_content"
-        android:textSize="40sp"
+        android:layout_height="wrap_content"
         android:textColor="@color/black_text_color"
-        app:layout_constraintTop_toBottomOf="@id/scores_text_view"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@id/coin_and_gem_linear_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scores_text_view" />
+
+    <LinearLayout
+        android:id="@+id/coin_and_gem_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/home_image_view"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_best_score_text_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/gem_background_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/coin_and_gem_background"
+                app:layout_constraintLeft_toLeftOf="@id/gem_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/gem_image_view"
+                android:layout_width="@dimen/coin_and_gem_size"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/gem"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/gem_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/app_name"
+                android:text="@string/simple_int"
+                android:textColor="@color/black_text_color"
+                android:textSize="@dimen/coin_and_gem_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/gem_background_image_view"
+                app:layout_constraintLeft_toRightOf="@id/gem_image_view"
+                app:layout_constraintTop_toTopOf="@id/gem_background_image_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+
+            <ImageView
+                android:id="@+id/coin_background_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/coin_and_gem_background"
+                app:layout_constraintLeft_toLeftOf="@id/coin_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/coin_image_view"
+                android:layout_width="@dimen/coin_and_gem_size"
+                android:layout_height="@dimen/coin_and_gem_size"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/coin" />
+
+            <TextView
+                android:id="@+id/coin_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="@string/simple_int"
+                android:textColor="@color/black_text_color"
+                android:textSize="@dimen/coin_and_gem_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/coin_background_image_view"
+                app:layout_constraintLeft_toRightOf="@id/coin_image_view"
+                app:layout_constraintTop_toTopOf="@id/coin_background_image_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/brain_image_view"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/brain_trim"
         app:layout_constraintBottom_toTopOf="@id/scores_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,33 +140,35 @@
 
     <ImageView
         android:id="@+id/home_image_view"
-        android:src="@drawable/home_button"
         android:layout_width="@dimen/image_view_button"
-        app:layout_constraintTop_toBottomOf="@id/new_best_score_text_view"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="@dimen/image_view_button"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/home_button"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/replay_image_view"
-        android:layout_height="@dimen/image_view_button"/>
+        app:layout_constraintTop_toBottomOf="@id/coin_and_gem_linear_layout" />
 
     <ImageView
         android:id="@+id/replay_image_view"
         android:layout_width="@dimen/image_view_button"
+        android:layout_height="@dimen/image_view_button"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/replay"
-        app:layout_constraintTop_toTopOf="@id/home_image_view"
         app:layout_constraintBottom_toBottomOf="@id/home_image_view"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/home_image_view"
-        android:layout_height="@dimen/image_view_button"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/home_image_view" />
 
     <ImageView
         android:id="@+id/show_score_settings_image_view"
         android:layout_width="@dimen/settings_icon"
-        app:tint="@color/black_text_color"
-        app:srcCompat="@drawable/ic_round_settings_24"
+        android:layout_height="@dimen/settings_icon"
+        android:layout_marginTop="@dimen/settings_margin"
+        android:layout_marginRight="@dimen/settings_margin"
+        android:contentDescription="@string/app_name"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="@dimen/settings_margin"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:layout_height="@dimen/settings_icon"
-        android:contentDescription="@string/app_name" />
+        app:srcCompat="@drawable/ic_round_settings_24"
+        app:tint="@color/black_text_color" />
 </androidx.constraintlayout.widget.ConstraintLayout>

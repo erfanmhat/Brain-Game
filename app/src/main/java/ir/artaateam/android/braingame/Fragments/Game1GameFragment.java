@@ -47,6 +47,7 @@ import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
 // add random moving and scale shapes in some of the fragments for ziba yy :)
 
 // TODO style
+//  change way of calculating score by game dif
 public class Game1GameFragment extends Fragment {
     private int GAME1_SLIDE_ANIMATION_DURATION = Game1AnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
     private int GAME1_DECISION_RESULT_ANIMATION_DURATION = Game1AnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;

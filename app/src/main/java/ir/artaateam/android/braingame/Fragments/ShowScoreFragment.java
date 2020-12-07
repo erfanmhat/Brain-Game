@@ -29,6 +29,8 @@ public class ShowScoreFragment extends Fragment {
     private ImageView brainImageView;
     private ImageView settingsImageView;
     private TextView newBestScoreTextView;
+    private TextView gemTextView;
+    private TextView coinTextView;
 
     public ShowScoreFragment() {
         super();
@@ -46,7 +48,7 @@ public class ShowScoreFragment extends Fragment {
         findViews(view);
         configure();
         getScoreIntFromBundle();
-        rewardToPlayer();
+        rewardToPlayerAndShowReward();
         setScoreTextView();
         setBestScoreTextView();
         scoreAndNewBestScoreAnimation();
@@ -68,6 +70,8 @@ public class ShowScoreFragment extends Fragment {
         brainImageView = view.findViewById(R.id.brain_image_view);
         settingsImageView = view.findViewById(R.id.show_score_settings_image_view);
         newBestScoreTextView = view.findViewById(R.id.new_best_score_text_view);
+        gemTextView = view.findViewById(R.id.gem_text_view);
+        coinTextView = view.findViewById(R.id.coin_text_view);
     }
 
     private void configure() {
@@ -85,11 +89,18 @@ public class ShowScoreFragment extends Fragment {
         settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
     }
 
-    private void rewardToPlayer(){
-        int coinInt=Data.getCoin()+scoreInt;
-        int gemInt=Data.getGem()+scoreInt/10;
-        Data.setCoin(coinInt);
-        Data.setGem(gemInt);
+    private void rewardToPlayerAndShowReward(){
+        String gemString=String.valueOf(Data.getGem());
+        String coinString=String.valueOf(Data.getCoin());
+        int gemPlusInt=scoreInt/10;
+        int coinPlusInt=scoreInt;
+        gemString+=" + "+gemPlusInt+" ";
+        coinString+=" + "+coinPlusInt+" ";
+        gemTextView.setText(gemString);
+        coinTextView.setText(coinString);
+
+        Data.setGem(Data.getGem()+gemPlusInt);
+        Data.setCoin(Data.getCoin()+coinPlusInt);
     }
 
     private void getScoreIntFromBundle(){
@@ -105,6 +116,8 @@ public class ShowScoreFragment extends Fragment {
         );
         scoreTextView.setTypeface(font);
         newBestScoreTextView.setTypeface(font);
+        gemTextView.setTypeface(font);
+        coinTextView.setTypeface(font);
     }
 
     private void removeFragment() {
