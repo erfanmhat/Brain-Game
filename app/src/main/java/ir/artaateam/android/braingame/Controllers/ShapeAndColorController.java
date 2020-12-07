@@ -145,7 +145,22 @@ public class ShapeAndColorController {
         shapeAndColorList.add(new ShapeAndColor(oval, purple, R.drawable.purple_oval));
         shapeAndColorList.add(new ShapeAndColor(oval, indigo, R.drawable.indigo_oval));
         shapeAndColorList.add(new ShapeAndColor(oval, orange, R.drawable.orange_oval));
-        // TODO add 2 shape
+
+        shapeAndColorList.add(new ShapeAndColor(pentagon, blue, R.drawable.blue_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, red, R.drawable.red_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, green, R.drawable.green_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, yellow, R.drawable.yellow_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, purple, R.drawable.purple_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, indigo, R.drawable.indigo_pentagon));
+        shapeAndColorList.add(new ShapeAndColor(pentagon, orange, R.drawable.orange_pentagon));
+
+        shapeAndColorList.add(new ShapeAndColor(hexagon, blue, R.drawable.blue_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, red, R.drawable.red_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, green, R.drawable.green_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, yellow, R.drawable.yellow_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, purple, R.drawable.purple_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, indigo, R.drawable.indigo_hexagon));
+        shapeAndColorList.add(new ShapeAndColor(hexagon, orange, R.drawable.orange_hexagon));
     }
 
     public int getRandom() {
