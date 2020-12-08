@@ -74,8 +74,8 @@ public class AppMainFragment extends Fragment {
     private void configure() {
         setFont();
         configureGameLevelButtons();
-        int gemInt = Data.getGem();
-        int coinInt = Data.getCoin();
+        int gemInt = Data.get().getGem();
+        int coinInt = Data.get().getCoin();
         String gemString = gemInt + " ";
         String coinString = coinInt + " ";
         gemTextView.setText(gemString);
@@ -91,22 +91,22 @@ public class AppMainFragment extends Fragment {
         gameLevel4.setText(hard.toString());
 
         gameLevel1.setOnClickListener(view -> {
-            Data.setGameDifficulty(instructions);
+            Data.get().setGameDifficulty(instructions);
             MusicController.stopMusic();
             FragmentController.showGame1GameFragment(getActivity());
         });
         gameLevel2.setOnClickListener(view -> {
-            Data.setGameDifficulty(easy);
+            Data.get().setGameDifficulty(easy);
             MusicController.stopMusic();
             FragmentController.showGame1GameFragment(getActivity());
         });
         gameLevel3.setOnClickListener(view -> {
-            Data.setGameDifficulty(normal);
+            Data.get().setGameDifficulty(normal);
             MusicController.stopMusic();
             FragmentController.showGame1GameFragment(getActivity());
         });
         gameLevel4.setOnClickListener(view -> {
-            Data.setGameDifficulty(hard);
+            Data.get().setGameDifficulty(hard);
             MusicController.stopMusic();
             FragmentController.showGame1GameFragment(getActivity());
         });

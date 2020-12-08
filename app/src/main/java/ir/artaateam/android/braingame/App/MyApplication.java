@@ -21,7 +21,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = this;
         Settings.get().config();
-        Data.config();
+        Data.get().config();
         SQLiteStudioService.instance().start(this);
     }
 

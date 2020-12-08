@@ -77,7 +77,7 @@ public class SingUpFragment extends Fragment {
     }
 
     private void saveUser() {
-        Data.setName(nameEditText.getText().toString());
+        Data.get().setName(nameEditText.getText().toString());
     }
 
     private void WrongAnimation(EditText editText) {

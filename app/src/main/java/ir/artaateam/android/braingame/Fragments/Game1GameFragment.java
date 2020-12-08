@@ -144,7 +144,7 @@ public class Game1GameFragment extends Fragment {
     }
 
     private void configure() {
-        setGameDifficulty(Data.getGameDifficulty());
+        setGameDifficulty(Data.get().getGameDifficulty());
         configureAndStartLivesProgressbar();
         livesFloat = FIRST_VALUE_OF_LIVES;
 
@@ -449,7 +449,7 @@ public class Game1GameFragment extends Fragment {
     }
 
     private void isNewBestScore() {
-        int oldScore = Data.getBestScore();
+        int oldScore = Data.get().getBestScore();
         if ((oldScore != 0) && (oldScore < scoreInt)) {
             if (!isNewBestScore) {
                 App.t(getString(R.string.new_best_score));
@@ -484,8 +484,8 @@ public class Game1GameFragment extends Fragment {
     }
 
     private void saveGameIfNewHighScore() {
-        if (Data.getBestScore() < scoreInt) {
-            Data.setBestScore(scoreInt);
+        if (Data.get().getBestScore() < scoreInt) {
+            Data.get().setBestScore(scoreInt);
         }
     }
 

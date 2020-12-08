@@ -4,63 +4,71 @@ import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.dbPackage.DBController;
 
 public class Data {
-    private static GameDifficulty gameDifficulty;
-    private static DBController dbController;
-    private static String name;
-    private static int gem;
-    private static int coin;
-    private static int bestScore;
+    private GameDifficulty gameDifficulty;
+    private DBController dbController;
+    private String name;
+    private int gem;
+    private int coin;
+    private int bestScore;
+    private static Data instance;
 
-    public static void config(){
-        dbController=new DBController();
-        name= dbController.getName();
-        gem=dbController.getGem();
-        coin=dbController.getCoin();
-        bestScore=dbController.getBestScore();
+    public static Data get() {
+        if (instance == null) {
+            instance = new Data();
+        }
+        return instance;
+    }
+
+    public void config() {
+        dbController = new DBController();
+        name = dbController.getName();
+        gem = dbController.getGem();
+        coin = dbController.getCoin();
+        bestScore = dbController.getBestScore();
     }
 
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static void setName(String name) {
-        Data.name = name;
+    public void setName(String name) {
+        this.name = name;
         dbController.saveName(name);
     }
 
-    public static int getGem() {
+    public int getGem() {
         return gem;
     }
 
-    public static void setGem(int gem) {
-        Data.gem = gem;
+    public void setGem(int gem) {
+        this.gem = gem;
         dbController.saveGem(gem);
     }
 
-    public static int getCoin() {
+    public int getCoin() {
         return coin;
     }
 
-    public static void setCoin(int coin) {
-        Data.coin = coin;
+    public void setCoin(int coin) {
+        this.coin = coin;
         dbController.saveCoin(coin);
     }
 
-    public static int getBestScore() {
+    public int getBestScore() {
         return bestScore;
     }
 
-    public static void setBestScore(int bestScore) {
-        Data.bestScore = bestScore;
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
         dbController.saveBestScore(bestScore);
     }
 
-    public static GameDifficulty getGameDifficulty() {
+    public GameDifficulty getGameDifficulty() {
         return gameDifficulty;
     }
 
-    public static void setGameDifficulty(GameDifficulty gameDifficulty) {
-        Data.gameDifficulty = gameDifficulty;
+    public void setGameDifficulty(GameDifficulty gameDifficulty) {
+        this.gameDifficulty = gameDifficulty;
     }
 }

@@ -90,8 +90,8 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void rewardToPlayerAndShowReward(){
-        String gemString=String.valueOf(Data.getGem());
-        String coinString=String.valueOf(Data.getCoin());
+        String gemString=String.valueOf(Data.get().getGem());
+        String coinString=String.valueOf(Data.get().getCoin());
         int gemPlusInt=scoreInt/10;
         int coinPlusInt=scoreInt;
         gemString+=" + "+gemPlusInt+" ";
@@ -99,8 +99,8 @@ public class ShowScoreFragment extends Fragment {
         gemTextView.setText(gemString);
         coinTextView.setText(coinString);
 
-        Data.setGem(Data.getGem()+gemPlusInt);
-        Data.setCoin(Data.getCoin()+coinPlusInt);
+        Data.get().setGem(Data.get().getGem()+gemPlusInt);
+        Data.get().setCoin(Data.get().getCoin()+coinPlusInt);
     }
 
     private void getScoreIntFromBundle(){

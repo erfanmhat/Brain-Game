@@ -69,7 +69,7 @@ public class AppFirstFragment extends Fragment {
     }
 
     private void checkIsFirstTimePlaying() {
-        isFirstTimePlaying = "".equals(Data.getName());
+        isFirstTimePlaying = "".equals(Data.get().getName());
     }
 
     private void startCountDownTimer() {
