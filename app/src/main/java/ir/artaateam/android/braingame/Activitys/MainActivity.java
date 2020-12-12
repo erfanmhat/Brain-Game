@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //FragmentController.showGameFirstFragment(MainActivity.this);
-        FragmentController.showAnimationsFragment(MainActivity.this);
+        FragmentController.showGameFirstFragment(MainActivity.this);
+        //FragmentController.showAnimationsFragment(MainActivity.this);
     }
 
 

@@ -461,7 +461,7 @@ public class Game1GameFragment extends Fragment {
     private void evaluateInputButtonAndConfigureNextLevel(GameInputButton clickedButton) {
         boolean answer = randomShapeAndColorController.isInputButtonTrue(clickedButton);
         if (answer) {
-            scoreInt++;
+            increaseScoreInt();
         }
         updateLivesIntAndStartLiveAnimation(answer);
         evaluateAnimationAndNextLevel(answer);
@@ -572,5 +572,17 @@ public class Game1GameFragment extends Fragment {
         shapeImageView.setVisibility(View.VISIBLE);
         GameMusicController.restart();
         generateFirstLevelAndStartTimer();
+    }
+
+    private void increaseScoreInt(){
+        if(gameDifficulty==instructions){
+            scoreInt++;
+        }else if (gameDifficulty==easy){
+            scoreInt+=2;
+        }else if (gameDifficulty==normal){
+            scoreInt+=3;
+        }else if (gameDifficulty==hard){
+            scoreInt+=4;
+        }
     }
 }

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import java.util.Random;
+
 import ir.artaateam.android.braingame.App.Data;
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.Controllers.MusicController;
@@ -32,8 +34,11 @@ public class ShowScoreFragment extends Fragment {
     private TextView gemTextView;
     private TextView coinTextView;
 
+    private Random rand;
+
     public ShowScoreFragment() {
         super();
+        rand=new Random();
     }
 
     @Nullable
@@ -92,8 +97,16 @@ public class ShowScoreFragment extends Fragment {
     private void rewardToPlayerAndShowReward(){
         String gemString=String.valueOf(Data.get().getGem());
         String coinString=String.valueOf(Data.get().getCoin());
-        int gemPlusInt=scoreInt/10;
-        int coinPlusInt=scoreInt;
+
+        int gemPlusInt=(int)((scoreInt/10)*Math.log((double)scoreInt));
+        int coinPlusInt=(int)(scoreInt*Math.log((double)scoreInt));
+        if(getArguments().getBoolean("isNewBestScore", false)){
+            coinPlusInt+=100;
+            gemPlusInt+=10;
+        }
+        coinPlusInt+=rand.nextInt(30);
+        gemPlusInt+=rand.nextInt(7);
+
         gemString+=" + "+gemPlusInt+" ";
         coinString+=" + "+coinPlusInt+" ";
         gemTextView.setText(gemString);
