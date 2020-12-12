@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
@@ -32,9 +31,10 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-beta01'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation files('/home/erfan/Desktop/SQLiteStudioRemote.jar')
+    //noinspection GradlePath
+    implementation files('/media/erfan/erfan/my projects/BrainGame/app/libs/SQLiteStudioRemote.jar')
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

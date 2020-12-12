@@ -17,6 +17,7 @@ import static ir.artaateam.android.braingame.Enums.Shape.*;
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
 
 public class ShapeAndColorController {
+    //TODO rename this class
     private Random random;
     private ShapeAndColor whatIsShapeAndColor;
     private GameInputButton answerButton;

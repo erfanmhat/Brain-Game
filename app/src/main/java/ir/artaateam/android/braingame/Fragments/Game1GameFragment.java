@@ -40,8 +40,8 @@ import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
 // 1> dublicate score for x S
 // 2> extra lives x
 // 3> freaze time for x S
-// 4> skip to next shape nd color
-// 5>remove some buttons randomly item
+// 4> skip to next shape and color
+// 5>remove some buttons randomly item  for x S
 // add dataBase for scores saving
 // game background updating
 // add random moving and scale shapes in some of the fragments for ziba yy :)

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.Fragments.AboutUsFragment;
+import ir.artaateam.android.braingame.Fragments.AnimationsFragment;
 import ir.artaateam.android.braingame.Fragments.AppFirstFragment;
 import ir.artaateam.android.braingame.Fragments.AppMainFragment;
 import ir.artaateam.android.braingame.Fragments.Game1GameFragment;
@@ -96,6 +97,14 @@ public class FragmentController {
                 .beginTransaction()
                 .add(R.id.app_main_frame, itemsAnimationFragment, null)
                 .addToBackStack(null)
+                .commit();
+    }
+
+    public static void showAnimationsFragment(@NonNull Activity activity) {
+        AnimationsFragment animationsFragment = new AnimationsFragment();
+        activity.getFragmentManager()
+                .beginTransaction()
+                .add(R.id.app_main_frame, animationsFragment)
                 .commit();
     }
 }
