@@ -65,7 +65,7 @@ public class ShowScoreFragment extends Fragment {
 
     @Override
     public void onPause() {
-        removeFragment();
+        FragmentController.removeFragment(getActivity(),this);
         MusicController.stopMusic();
         super.onPause();
     }
@@ -85,12 +85,12 @@ public class ShowScoreFragment extends Fragment {
         setFont();
         homeImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
-            removeFragment();
-            FragmentController.showAppMainFragment(getActivity());
+            FragmentController.removeFragment(getActivity(),this);
+            FragmentController.showMainFragment(getActivity());
         });
         replayImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
-            removeFragment();
+            FragmentController.removeFragment(getActivity(),this);
             FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
@@ -100,6 +100,8 @@ public class ShowScoreFragment extends Fragment {
         String gemString=String.valueOf(Data.get().getGem());
         String coinString=String.valueOf(Data.get().getCoin());
 
+        //TODO cut to a new func
+        // and some changes
         int gemPlusInt=(int)((scoreInt/10)*Math.log((double)scoreInt));
         int coinPlusInt=(int)(scoreInt*Math.log((double)scoreInt));
         if(getArguments().getBoolean("isNewBestScore", false)){
@@ -108,6 +110,10 @@ public class ShowScoreFragment extends Fragment {
         }
         coinPlusInt+=rand.nextInt(30);
         gemPlusInt+=rand.nextInt(7);
+        if(scoreInt<5){
+            gemPlusInt=0;
+            coinPlusInt=2;
+        }
 
         gemString+=" + "+gemPlusInt+" ";
         coinString+=" + "+coinPlusInt+" ";
@@ -133,13 +139,6 @@ public class ShowScoreFragment extends Fragment {
         newBestScoreTextView.setTypeface(font);
         gemTextView.setTypeface(font);
         coinTextView.setTypeface(font);
-    }
-
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
     }
 
     private void setBestScoreTextView() {

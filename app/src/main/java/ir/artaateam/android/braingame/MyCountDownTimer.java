@@ -7,6 +7,8 @@ public abstract class MyCountDownTimer extends  CountDownTimer {
     boolean isEnded=false;
     boolean isRunning=false;
 
+    //TODO change all CountDownTimers To MyCountDownTimer
+
     public MyCountDownTimer(long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
     }

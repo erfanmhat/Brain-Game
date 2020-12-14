@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
+import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;
 // TODO :)
 public class AboutUsFragment extends Fragment {
@@ -26,10 +27,9 @@ public class AboutUsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void closeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
+    @Override
+    public void onPause() {
+        super.onPause();
+        FragmentController.removeFragment(getActivity(),this);
     }
 }

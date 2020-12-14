@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.Random;
 
 import ir.artaateam.android.braingame.App.MyApplication;
+import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.Controllers.ShapeAndColorController;
 import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.MyCountDownTimer;
@@ -73,6 +74,7 @@ public class AnimationsFragment extends Fragment {
         if(!animationTimer.isEnded()){
             animationTimer.cancel();
         }
+        FragmentController.removeFragment(getActivity(),this);
     }
 
     private void findViews(View view) {

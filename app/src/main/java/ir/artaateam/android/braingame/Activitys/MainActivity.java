@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ir.artaateam.android.braingame.Controllers.FragmentController;
+import ir.artaateam.android.braingame.Enums.FragmentsStatus;
+import ir.artaateam.android.braingame.Fragments.GameShapeAndColorFragment;
 import ir.artaateam.android.braingame.R;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean showFirstFragment = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +24,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        FragmentController.showGameFirstFragment(MainActivity.this);
-        //FragmentController.showAnimationsFragment(MainActivity.this);
+        if (showFirstFragment) {
+            FragmentController.showFirstFragment(MainActivity.this);
+            showFirstFragment = false;
+        } else if (FragmentController.getFragmentsStatus() == FragmentsStatus.GameShapeAndColorFragment) {
+            FragmentController.showShowScoreFragment(
+                    MainActivity.this,
+                    GameShapeAndColorFragment.getScoreInt(),
+                    GameShapeAndColorFragment.getIsNewBestScore());
+        } else {
+            FragmentController.showMainFragment(MainActivity.this);
+        }
     }
 
 

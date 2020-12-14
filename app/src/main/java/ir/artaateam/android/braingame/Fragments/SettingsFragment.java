@@ -122,12 +122,9 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    private void removeFragment() {
+    private void removeFragment(){
         Settings.get().setIsSettingOpen(false);
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
+        FragmentController.removeFragment(getActivity(), this);
     }
 }
 

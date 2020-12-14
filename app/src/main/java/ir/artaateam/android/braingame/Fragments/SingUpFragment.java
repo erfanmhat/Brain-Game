@@ -36,11 +36,12 @@ public class SingUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
+        nameEditText.requestFocus();
     }
 
     @Override
     public void onPause() {
-        removeFragment();
+        FragmentController.removeFragment(getActivity(),this);
         super.onPause();
     }
 
@@ -65,15 +66,8 @@ public class SingUpFragment extends Fragment {
         }
 
         saveUser();
-        removeFragment();
-        FragmentController.showAppMainFragment(getActivity());
-    }
-
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
+        FragmentController.removeFragment(getActivity(),this);
+        FragmentController.showMainFragment(getActivity());
     }
 
     private void saveUser() {

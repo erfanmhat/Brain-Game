@@ -20,7 +20,7 @@ import ir.artaateam.android.braingame.App.MyApplication;
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
 
 
-public class AppMainFragment extends Fragment {
+public class MainFragment extends Fragment {
     private ImageView settingsImageView;
     private TextView gemTextView;
     private TextView coinTextView;
@@ -33,14 +33,14 @@ public class AppMainFragment extends Fragment {
 
     //TODO add user best scores button and new fragment for scores :)
 
-    public AppMainFragment() {
+    public MainFragment() {
         super();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.app_main_fragment, container, false);
+        return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AppMainFragment extends Fragment {
     @Override
     public void onPause() {
         MusicController.stopMusic();
-        removeFragment();
+        FragmentController.removeFragment(getActivity(),this);
         super.onPause();
     }
 
@@ -125,12 +125,5 @@ public class AppMainFragment extends Fragment {
         );
         gemTextView.setTypeface(font);
         coinTextView.setTypeface(font);
-    }
-
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
     }
 }

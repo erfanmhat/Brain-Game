@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;
 //TODO add animation for items
 public class ItemsAnimationFragment extends Fragment {
@@ -27,6 +28,12 @@ public class ItemsAnimationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        FragmentController.removeFragment(getActivity(),this);
     }
 
     private void findViews(View view) {

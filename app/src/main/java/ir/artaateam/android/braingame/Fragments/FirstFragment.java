@@ -17,7 +17,7 @@ import ir.artaateam.android.braingame.R;
 import ir.artaateam.android.braingame.App.MyApplication;
 
 //TODO add a progress bar to this fragment
-public class AppFirstFragment extends Fragment {
+public class FirstFragment extends Fragment {
     private boolean isFirstTimePlaying;
     private boolean isProgressing = false;
 
@@ -28,14 +28,14 @@ public class AppFirstFragment extends Fragment {
 
     private CountDownTimer appFirstFragmentTimer;
 
-    public AppFirstFragment() {
+    public FirstFragment() {
         super();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.app_first_fragment, container, false);
+        return inflater.inflate(R.layout.first_fragment, container, false);
     }
 
     @Override
@@ -50,10 +50,10 @@ public class AppFirstFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        removeFragment();
         if (isProgressing) {
             appFirstFragmentTimer.cancel();
         }
+        FragmentController.removeFragment(getActivity(),this);
     }
 
     private void findViews(View view) {
@@ -103,18 +103,11 @@ public class AppFirstFragment extends Fragment {
     }
 
     private void showNextFragment() {
-        removeFragment();
+        FragmentController.removeFragment(getActivity(),this);
         if (isFirstTimePlaying) {
             FragmentController.showSingUpFragment(getActivity());
         } else {
-            FragmentController.showAppMainFragment(getActivity());
+            FragmentController.showMainFragment(getActivity());
         }
-    }
-
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
+import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;
 // TODO add game guide
 public class HowToDoFragment extends Fragment {
@@ -27,10 +28,9 @@ public class HowToDoFragment extends Fragment {
 
     }
 
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
+    @Override
+    public void onPause() {
+        super.onPause();
+        FragmentController.removeFragment(getActivity(),this);
     }
 }

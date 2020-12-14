@@ -64,14 +64,14 @@ public class GameShapeAndColorFragment extends Fragment {
 
     private GameDifficulty gameDifficulty = NULLGameDifficulty;
 
-    private int scoreInt = 0;
+    private static int scoreInt = 0;
     private int countdownInt;
     private float livesFloat;
     private float livesProgressbarProgress;
     private boolean canClickOnButton = false;
     private boolean gameInProgress = false;
     private boolean isRemainTimeLiveCountDownTimerStarted = false;
-    private boolean isNewBestScore = false;
+    private static boolean isNewBestScore = false;
     private boolean Paused = false;
 
     private ImageView shapeButtonImageView;
@@ -121,7 +121,7 @@ public class GameShapeAndColorFragment extends Fragment {
     public void onPause() {
         super.onPause();
         gameInProgress = false;
-        closeGame();
+        FragmentController.removeFragment(getActivity(), this);
     }
 
     private void findViews(View view) {
@@ -188,6 +188,7 @@ public class GameShapeAndColorFragment extends Fragment {
 
         configureLivesCountDown();
         remainTimeLiveCountDownTimer.start();
+        isRemainTimeLiveCountDownTimerStarted = true;
     }
 
     private double hardeningCoefficientAccordingToScoreInt() {
@@ -251,7 +252,7 @@ public class GameShapeAndColorFragment extends Fragment {
         saveGameIfNewHighScore();
         FragmentController.showShowScoreFragment(getActivity(), scoreInt, isNewBestScore);
         closeGame();
-        removeFragment();
+        FragmentController.removeFragment(getActivity(), this);
     }
 
     private void closeGame() {
@@ -281,13 +282,6 @@ public class GameShapeAndColorFragment extends Fragment {
         }
     }
 
-    private void removeFragment() {
-        getFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .commit();
-    }
-
     private void generateFirstLevelAndStartTimer() {
         randomShapeAndColorController = new ShapeAndColorController(gameDifficulty);
         shapeImageView.setImageResource(
@@ -315,6 +309,7 @@ public class GameShapeAndColorFragment extends Fragment {
             public void onTick(long l) {
                 //0 -> ... -> 1
                 //#######################################
+                if(!gameInProgress)return;//TODO ???? crash
                 countdownTextView.setAlpha(1f);
                 countdownTextView.setText(getString(R.string.game_condition_template, scoreInt, (int) livesFloat));
                 //#######################################
@@ -337,6 +332,7 @@ public class GameShapeAndColorFragment extends Fragment {
                     updateLivesIntAndStartLiveAnimation(false);
                     remainTimeLiveEditText.setText("0.0");
                     remainTimeLiveCountDownTimer.start();
+                    isRemainTimeLiveCountDownTimerStarted = true;
                 }
             }
         };
@@ -572,15 +568,23 @@ public class GameShapeAndColorFragment extends Fragment {
         generateFirstLevelAndStartTimer();
     }
 
-    private void increaseScoreInt(){
-        if(gameDifficulty==instructions){
+    private void increaseScoreInt() {
+        if (gameDifficulty == instructions) {
             scoreInt++;
-        }else if (gameDifficulty==easy){
-            scoreInt+=2;
-        }else if (gameDifficulty==normal){
-            scoreInt+=3;
-        }else if (gameDifficulty==hard){
-            scoreInt+=4;
+        } else if (gameDifficulty == easy) {
+            scoreInt += 2;
+        } else if (gameDifficulty == normal) {
+            scoreInt += 3;
+        } else if (gameDifficulty == hard) {
+            scoreInt += 4;
         }
+    }
+
+    public static int getScoreInt() {
+        return scoreInt;
+    }
+
+    public static boolean getIsNewBestScore() {
+        return isNewBestScore;
     }
 }
