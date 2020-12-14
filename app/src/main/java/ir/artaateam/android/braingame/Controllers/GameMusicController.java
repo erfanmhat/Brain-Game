@@ -56,7 +56,8 @@ public class GameMusicController {
         isCountDownTimerStarted=true;
     }
 
-    public static void stopGameMusic(){
+    public static void stopGameMusic(String fun){
+        App.l(fun+" stop Game Music");
         MusicController.stopMusic();
         if(isCountDownTimerStarted){
             countDownTimer.cancel();
@@ -65,7 +66,7 @@ public class GameMusicController {
     }
 
     public static void pause(){
-        stopGameMusic();
+        stopGameMusic("pause");
         // TODO most change
     }
 

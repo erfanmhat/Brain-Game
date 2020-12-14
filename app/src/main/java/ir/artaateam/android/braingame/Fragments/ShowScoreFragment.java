@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Random;
 
+import ir.artaateam.android.braingame.App.App;
 import ir.artaateam.android.braingame.App.Data;
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.Controllers.MusicController;
@@ -57,6 +58,7 @@ public class ShowScoreFragment extends Fragment {
         setScoreTextView();
         setBestScoreTextView();
         scoreAndNewBestScoreAnimation();
+        App.l("show score fragment");
         MusicController.startMusic(getActivity(), R.raw.music_show_score, false);
         otherAnimations();
     }
@@ -89,7 +91,7 @@ public class ShowScoreFragment extends Fragment {
         replayImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
             removeFragment();
-            FragmentController.showGame1GameFragment(getActivity());
+            FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
     }

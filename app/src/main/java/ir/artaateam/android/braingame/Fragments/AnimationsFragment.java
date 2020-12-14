@@ -22,6 +22,7 @@ import ir.artaateam.android.braingame.MyCountDownTimer;
 import ir.artaateam.android.braingame.R;
 
 public class AnimationsFragment extends Fragment {
+    // TODO update
     private static final int NUMBER_OF_IMAGE_VIEWS = 40;
     private static final int IMAGE_VIEWS_SIZE = 50;
     private static final int ANIMATION_DURATION = 10000;

@@ -14,5 +14,4 @@
     <string name="quit">Quit</string>
     <string name="new_best_score">New Record !</string>
     <string name="game_condition_template">your point : %d\nlives : %d</string>
-    <string name="step1_string">first\n game show a random shape with a random color\n you must memorize both \n shape and color for next </string>
 </resources>

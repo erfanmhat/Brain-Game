@@ -5,12 +5,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.Fragments.AboutUsFragment;
 import ir.artaateam.android.braingame.Fragments.AnimationsFragment;
 import ir.artaateam.android.braingame.Fragments.AppFirstFragment;
 import ir.artaateam.android.braingame.Fragments.AppMainFragment;
-import ir.artaateam.android.braingame.Fragments.Game1GameFragment;
+import ir.artaateam.android.braingame.Fragments.GameShapeAndColorFragment;
 import ir.artaateam.android.braingame.Fragments.HowToDoFragment;
 import ir.artaateam.android.braingame.Fragments.ItemsAnimationFragment;
 import ir.artaateam.android.braingame.Fragments.SettingsFragment;
@@ -35,11 +34,11 @@ public class FragmentController {
                 .commit();
     }
 
-    public static void showGame1GameFragment(@NonNull Activity activity) {
-        Game1GameFragment game1GameFragment = new Game1GameFragment();
+    public static void showGameShapeAndColorFragment(@NonNull Activity activity) {
+        GameShapeAndColorFragment gameShapeAndColorFragment = new GameShapeAndColorFragment();
         activity.getFragmentManager()
                 .beginTransaction()
-                .add(R.id.app_main_frame, game1GameFragment)
+                .add(R.id.app_main_frame, gameShapeAndColorFragment)
                 .commit();
     }
 

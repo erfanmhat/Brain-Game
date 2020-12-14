@@ -1,7 +1,6 @@
 package ir.artaateam.android.braingame.Fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import ir.artaateam.android.braingame.App.Data;
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.Controllers.MusicController;
 import ir.artaateam.android.braingame.R;
-import ir.artaateam.android.braingame.Activitys.StoreActivity;
 import ir.artaateam.android.braingame.App.MyApplication;
 
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
@@ -81,7 +79,7 @@ public class AppMainFragment extends Fragment {
         gemTextView.setText(gemString);
         coinTextView.setText(coinString);
         settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
-        storeImageView.setOnClickListener(v -> startActivity(new Intent(getActivity(), StoreActivity.class)));
+        storeImageView.setOnClickListener(v -> {});
     }
 
     private void configureGameLevelButtons(){
@@ -93,22 +91,22 @@ public class AppMainFragment extends Fragment {
         gameLevel1.setOnClickListener(view -> {
             Data.get().setGameDifficulty(instructions);
             MusicController.stopMusic();
-            FragmentController.showGame1GameFragment(getActivity());
+            FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         gameLevel2.setOnClickListener(view -> {
             Data.get().setGameDifficulty(easy);
             MusicController.stopMusic();
-            FragmentController.showGame1GameFragment(getActivity());
+            FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         gameLevel3.setOnClickListener(view -> {
             Data.get().setGameDifficulty(normal);
             MusicController.stopMusic();
-            FragmentController.showGame1GameFragment(getActivity());
+            FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         gameLevel4.setOnClickListener(view -> {
             Data.get().setGameDifficulty(hard);
             MusicController.stopMusic();
-            FragmentController.showGame1GameFragment(getActivity());
+            FragmentController.showGameShapeAndColorFragment(getActivity());
         });
         Typeface font=Typeface.createFromAsset(
                 MyApplication.getContext().getAssets(),

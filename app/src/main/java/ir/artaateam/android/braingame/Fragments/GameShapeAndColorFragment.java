@@ -30,11 +30,11 @@ import ir.artaateam.android.braingame.Controllers.ShapeAndColorController;
 import ir.artaateam.android.braingame.App.MyApplication;
 import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.Enums.GameInputButton;
-import ir.artaateam.android.braingame.Game1AnimationValues;
+import ir.artaateam.android.braingame.ShapeAndColorAnimationValues;
 
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
 import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
-//TODO chose new name to this game
+//TODO
 // refactor game values to another class
 // add new items one by one to game
 // 1> dublicate score for x S
@@ -44,13 +44,11 @@ import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
 // 5>remove some buttons randomly item  for x S
 // add dataBase for scores saving
 // game background updating
-// add random moving and scale shapes in some of the fragments for ziba yy :)
 
 // TODO style
-//  change way of calculating score by game dif
-public class Game1GameFragment extends Fragment {
-    private int GAME1_SLIDE_ANIMATION_DURATION = Game1AnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
-    private int GAME1_DECISION_RESULT_ANIMATION_DURATION = Game1AnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
+public class GameShapeAndColorFragment extends Fragment {
+    private int GAME1_SLIDE_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
+    private int GAME1_DECISION_RESULT_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
 
     private int MAX_TIME_FOR_ANSWER_MAX = 5000;
     private int MAX_TIME_FOR_ANSWER = MAX_TIME_FOR_ANSWER_MAX;
@@ -97,7 +95,7 @@ public class Game1GameFragment extends Fragment {
     private CountDownTimer remainTimeLiveCountDownTimer;
     private ShapeAndColorController randomShapeAndColorController;
 
-    public Game1GameFragment() {
+    public GameShapeAndColorFragment() {
         super();
     }
 
@@ -108,7 +106,7 @@ public class Game1GameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.game1_game_fragment, container, false);
+        return inflater.inflate(R.layout.shape_and_color_game_fragment, container, false);
     }
 
     @Override
@@ -172,12 +170,12 @@ public class Game1GameFragment extends Fragment {
     private void increaseAnimationsSpeed() {
         GAME1_SLIDE_ANIMATION_DURATION =
                 (int) (hardeningCoefficientAccordingToScoreInt() *
-                        Game1AnimationValues.
+                        ShapeAndColorAnimationValues.
                                 GAME1_SLIDE_ANIMATION_DURATION_MAX);
 
         GAME1_DECISION_RESULT_ANIMATION_DURATION =
                 (int) (hardeningCoefficientAccordingToScoreInt() *
-                        Game1AnimationValues.
+                        ShapeAndColorAnimationValues.
                                 GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX);
     }
 
@@ -258,7 +256,7 @@ public class Game1GameFragment extends Fragment {
 
     private void closeGame() {
         try {
-            GameMusicController.stopGameMusic();
+            GameMusicController.stopGameMusic("closeGame");
             canClickOnButton = false;
             if (countdownAnimatorSet != null) {
                 if (countdownAnimatorSet.isRunning()) {
@@ -278,7 +276,8 @@ public class Game1GameFragment extends Fragment {
             if (isRemainTimeLiveCountDownTimerStarted) {
                 remainTimeLiveCountDownTimer.cancel();
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            App.l(e.getMessage());
         }
     }
 
@@ -349,21 +348,21 @@ public class Game1GameFragment extends Fragment {
                 "scaleX",
                 1f, 3f
         );
-        XAnimator.setDuration(Game1AnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
+        XAnimator.setDuration(ShapeAndColorAnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
 
         ObjectAnimator YAnimation = ObjectAnimator.ofFloat(
                 countdownTextView,
                 "scaleY",
                 1f, 3f
         );
-        YAnimation.setDuration(Game1AnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
+        YAnimation.setDuration(ShapeAndColorAnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
 
         ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(
                 countdownTextView,
                 "alpha",
                 1f, 0f
         );
-        alphaAnimation.setDuration(Game1AnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
+        alphaAnimation.setDuration(ShapeAndColorAnimationValues.GAME1_COUNT_DOWN_ANIMATION_DURATION);
 
         countdownAnimatorSet = new AnimatorSet();
         countdownAnimatorSet.playTogether(XAnimator, YAnimation, alphaAnimation);
@@ -372,7 +371,6 @@ public class Game1GameFragment extends Fragment {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 if (countdownInt == 0) {
-                    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                     startGame();
                 } else {
                     countdownAnimation();
