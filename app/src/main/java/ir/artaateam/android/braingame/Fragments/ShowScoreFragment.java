@@ -1,7 +1,6 @@
 package ir.artaateam.android.braingame.Fragments;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.util.Random;
 

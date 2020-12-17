@@ -1,6 +1,5 @@
 package ir.artaateam.android.braingame.Fragments;
 
-import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import ir.artaateam.android.braingame.App.Data;
 import ir.artaateam.android.braingame.Controllers.FragmentController;

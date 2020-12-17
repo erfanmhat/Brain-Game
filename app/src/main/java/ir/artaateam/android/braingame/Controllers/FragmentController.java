@@ -1,10 +1,10 @@
 package ir.artaateam.android.braingame.Controllers;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import ir.artaateam.android.braingame.Enums.FragmentsStatus;
 import ir.artaateam.android.braingame.Fragments.AboutUsFragment;
@@ -28,51 +28,51 @@ public class FragmentController {
         return fragmentsStatus;
     }
 
-    public static void removeFragment(Activity activity, Fragment fragment) {
+    public static void removeFragment(FragmentActivity activity, Fragment fragment) {
         if (fragment == null) return;
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .remove(fragment)
                 .commit();
     }
 
-    public static void showFirstFragment(@NonNull Activity activity) {
+    public static void showFirstFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = FirstFragment;
-        ir.artaateam.android.braingame.Fragments.FirstFragment firstFragment = new FirstFragment();
-        activity.getFragmentManager()
+        FirstFragment firstFragment = new FirstFragment();
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, firstFragment)
                 .commit();
     }
 
-    public static void showMainFragment(@NonNull Activity activity) {
+    public static void showMainFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = MainFragment;
-        ir.artaateam.android.braingame.Fragments.MainFragment mainFragment = new MainFragment();
-        activity.getFragmentManager()
+        MainFragment mainFragment = new MainFragment();
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, mainFragment)
                 .commit();
     }
 
-    public static void showGameShapeAndColorFragment(@NonNull Activity activity) {
+    public static void showGameShapeAndColorFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = GameShapeAndColorFragment;
         GameShapeAndColorFragment gameShapeAndColorFragment = new GameShapeAndColorFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, gameShapeAndColorFragment)
                 .commit();
     }
 
-    public static void showSingUpFragment(@NonNull Activity activity) {
+    public static void showSingUpFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = SingUpFragment;
         SingUpFragment singUpFragment = new SingUpFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, singUpFragment)
                 .commit();
     }
 
-    public static void showShowScoreFragment(@NonNull Activity activity, int scoreInt, boolean isNewBestScore) {
+    public static void showShowScoreFragment(@NonNull FragmentActivity activity, int scoreInt, boolean isNewBestScore) {
         fragmentsStatus = ShowScoreFragment;
         ShowScoreFragment showScoreFragment = new ShowScoreFragment();
         Bundle bundle = new Bundle();
@@ -80,53 +80,53 @@ public class FragmentController {
         bundle.putBoolean("isNewBestScore", isNewBestScore);
         showScoreFragment.setArguments(bundle);
 
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, showScoreFragment)
                 .commit();
     }
 
-    public static void showAboutUsFragment(@NonNull Activity activity) {
+    public static void showAboutUsFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = AboutUsFragment;
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, aboutUsFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    public static void showHowToDoFragment(@NonNull Activity activity) {
+    public static void showHowToDoFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = HowToDoFragment;
         HowToDoFragment howToDoFragment = new HowToDoFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, howToDoFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    public static void showSettingsFragment(@NonNull Activity activity) {
+    public static void showSettingsFragment(@NonNull FragmentActivity activity) {
         SettingsFragment settingsFragment = new SettingsFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.settings_frame, settingsFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    public void showItemsAnimationFragment(@NonNull Activity activity) {
+    public void showItemsAnimationFragment(@NonNull FragmentActivity activity) {
         ItemsAnimationFragment itemsAnimationFragment = new ItemsAnimationFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, itemsAnimationFragment, null)
                 .addToBackStack(null)
                 .commit();
     }
 
-    public static void showAnimationsFragment(@NonNull Activity activity) {
+    public static void showAnimationsFragment(@NonNull FragmentActivity activity) {
         AnimationsFragment animationsFragment = new AnimationsFragment();
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, animationsFragment)
                 .commit();

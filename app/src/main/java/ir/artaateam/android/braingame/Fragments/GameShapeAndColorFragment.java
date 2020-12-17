@@ -4,18 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
@@ -31,6 +31,7 @@ import ir.artaateam.android.braingame.App.MyApplication;
 import ir.artaateam.android.braingame.Enums.GameDifficulty;
 import ir.artaateam.android.braingame.Enums.GameInputButton;
 import ir.artaateam.android.braingame.ShapeAndColorAnimationValues;
+import ir.artaateam.android.braingame.SmartCountDownTimer;
 
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
 import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
@@ -44,8 +45,6 @@ import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
 // 5>remove some buttons randomly item  for x S
 // add dataBase for scores saving
 // game background updating
-
-// TODO style
 public class GameShapeAndColorFragment extends Fragment {
     private int GAME1_SLIDE_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
     private int GAME1_DECISION_RESULT_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
@@ -70,7 +69,6 @@ public class GameShapeAndColorFragment extends Fragment {
     private float livesProgressbarProgress;
     private boolean canClickOnButton = false;
     private boolean gameInProgress = false;
-    private boolean isRemainTimeLiveCountDownTimerStarted = false;
     private static boolean isNewBestScore = false;
     private boolean Paused = false;
 
@@ -92,7 +90,7 @@ public class GameShapeAndColorFragment extends Fragment {
     private AnimatorSet countdownAnimatorSet = null;
     private AnimatorSet changeShapeAnimatorSet = null;
     private AnimatorSet validationResultImageViewAlphaAndScaleAnimatorSet = null;
-    private CountDownTimer remainTimeLiveCountDownTimer;
+    private SmartCountDownTimer remainTimeLiveSmartCountDownTimer;
     private ShapeAndColorController randomShapeAndColorController;
 
     public GameShapeAndColorFragment() {
@@ -110,7 +108,7 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
@@ -119,9 +117,13 @@ public class GameShapeAndColorFragment extends Fragment {
 
     @Override
     public void onPause() {
+        remainTimeLiveSmartCountDownTimer.stop();
+        App.l("111111111111111");
         super.onPause();
+        App.l("2222222222222222222");
         gameInProgress = false;
-        FragmentController.removeFragment(getActivity(), this);
+        App.l("onPause stop");
+        removeFragment();
     }
 
     private void findViews(View view) {
@@ -180,15 +182,14 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private void decreaseMaxTimeForAnswer() {
-        remainTimeLiveCountDownTimer.cancel();
+        remainTimeLiveSmartCountDownTimer.stop();
 
         MAX_TIME_FOR_ANSWER =
                 (int) (hardeningCoefficientAccordingToScoreInt() *
                         MAX_TIME_FOR_ANSWER_MAX);
 
         configureLivesCountDown();
-        remainTimeLiveCountDownTimer.start();
-        isRemainTimeLiveCountDownTimerStarted = true;
+        remainTimeLiveSmartCountDownTimer.start();
     }
 
     private double hardeningCoefficientAccordingToScoreInt() {
@@ -243,16 +244,17 @@ public class GameShapeAndColorFragment extends Fragment {
             }
         });
         changeShapeAnimatorSet.start();
-        remainTimeLiveCountDownTimer.start();
-        isRemainTimeLiveCountDownTimerStarted = true;
+        remainTimeLiveSmartCountDownTimer.start();
     }
 
     private void endGame() {
         gameInProgress = false;
+        remainTimeLiveSmartCountDownTimer.stop();
+        App.l("endGame stop");
+        closeGame();
         saveGameIfNewHighScore();
         FragmentController.showShowScoreFragment(getActivity(), scoreInt, isNewBestScore);
-        closeGame();
-        FragmentController.removeFragment(getActivity(), this);
+        removeFragment();
     }
 
     private void closeGame() {
@@ -274,9 +276,8 @@ public class GameShapeAndColorFragment extends Fragment {
                     validationResultImageViewAlphaAndScaleAnimatorSet.cancel();
                 }
             }
-            if (isRemainTimeLiveCountDownTimerStarted) {
-                remainTimeLiveCountDownTimer.cancel();
-            }
+            remainTimeLiveSmartCountDownTimer.stop();
+            App.l("stop");
         } catch (Exception e) {
             App.l(e.getMessage());
         }
@@ -304,9 +305,9 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private void configureLivesCountDown() {
-        remainTimeLiveCountDownTimer = new CountDownTimer(MAX_TIME_FOR_ANSWER, 10) {
+        remainTimeLiveSmartCountDownTimer = new SmartCountDownTimer(MAX_TIME_FOR_ANSWER, 10) {
             @Override
-            public void onTick(long l) {
+            public void on_tick(long l) {
                 //0 -> ... -> 1
                 //#######################################
                 if(!gameInProgress)return;//TODO ???? crash
@@ -327,12 +328,11 @@ public class GameShapeAndColorFragment extends Fragment {
             }
 
             @Override
-            public void onFinish() {
+            public void on_finish() {
                 if (gameInProgress && (!Paused)) {
                     updateLivesIntAndStartLiveAnimation(false);
                     remainTimeLiveEditText.setText("0.0");
-                    remainTimeLiveCountDownTimer.start();
-                    isRemainTimeLiveCountDownTimerStarted = true;
+                    remainTimeLiveSmartCountDownTimer.start();
                 }
             }
         };
@@ -554,7 +554,7 @@ public class GameShapeAndColorFragment extends Fragment {
         if (validationResultImageViewAlphaAndScaleAnimatorSet != null) {
             validationResultImageViewAlphaAndScaleAnimatorSet.pause();
         }
-        remainTimeLiveCountDownTimer.cancel();
+        remainTimeLiveSmartCountDownTimer.stop();
         randomShapeAndColorController = null;
 
         GameMusicController.pause();
@@ -587,4 +587,16 @@ public class GameShapeAndColorFragment extends Fragment {
     public static boolean getIsNewBestScore() {
         return isNewBestScore;
     }
+
+    public void removeFragment() {
+        if(getActivity()!=null){
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(this)
+                    .commit();
+        }
+    }
+
+
 }

@@ -36,6 +36,4 @@ public class MainActivity extends AppCompatActivity {
             FragmentController.showMainFragment(MainActivity.this);
         }
     }
-
-
 }

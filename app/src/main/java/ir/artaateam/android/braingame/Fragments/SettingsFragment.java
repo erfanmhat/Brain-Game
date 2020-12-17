@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import android.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 

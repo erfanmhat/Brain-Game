@@ -1,12 +1,12 @@
 package ir.artaateam.android.braingame.Fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;

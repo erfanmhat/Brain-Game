@@ -1,7 +1,6 @@
 package ir.artaateam.android.braingame.Fragments;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import java.util.Random;
 
@@ -19,7 +19,7 @@ import ir.artaateam.android.braingame.App.MyApplication;
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.Controllers.ShapeAndColorController;
 import ir.artaateam.android.braingame.Enums.GameDifficulty;
-import ir.artaateam.android.braingame.MyCountDownTimer;
+import ir.artaateam.android.braingame.SmartCountDownTimer;
 import ir.artaateam.android.braingame.R;
 
 public class AnimationsFragment extends Fragment {
@@ -41,7 +41,7 @@ public class AnimationsFragment extends Fragment {
 
     private Random random;
     private ShapeAndColorController shapeAndColorController;
-    private MyCountDownTimer animationTimer;
+    private SmartCountDownTimer animationTimer;
 
     public AnimationsFragment() {
         super();
@@ -136,13 +136,13 @@ public class AnimationsFragment extends Fragment {
         for (int index = 0; index < NUMBER_OF_IMAGE_VIEWS; index++) {
             startImageViewAnimation(index);
         }
-        animationTimer=new MyCountDownTimer(ANIMATION_DURATION,100) {
+        animationTimer=new SmartCountDownTimer(ANIMATION_DURATION,100) {
             @Override
-            public void tick(long millisUntilFinished) {
+            public void on_tick(long millisUntilFinished) {
             }
 
             @Override
-            public void finish() {
+            public void on_finish() {
                 for(int index=0;index<NUMBER_OF_IMAGE_VIEWS;index++){
                     imageViewOldLocationX[index]=
                             imageViewTargetLocationX[index];
