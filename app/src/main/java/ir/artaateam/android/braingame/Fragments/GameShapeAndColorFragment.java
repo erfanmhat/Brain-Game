@@ -35,6 +35,7 @@ import ir.artaateam.android.braingame.SmartCountDownTimer;
 
 import static ir.artaateam.android.braingame.Enums.GameDifficulty.*;
 import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
+
 //TODO
 // refactor game values to another class
 // add new items one by one to game
@@ -45,6 +46,8 @@ import static ir.artaateam.android.braingame.Enums.GameInputButton.*;
 // 5>remove some buttons randomly item  for x S
 // add dataBase for scores saving
 // game background updating
+// close and end game
+// music switch to smartCountDownTimer
 public class GameShapeAndColorFragment extends Fragment {
     private int GAME1_SLIDE_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_SLIDE_ANIMATION_DURATION_MAX;
     private int GAME1_DECISION_RESULT_ANIMATION_DURATION = ShapeAndColorAnimationValues.GAME1_DECISION_RESULT_ANIMATION_DURATION_MAX;
@@ -112,18 +115,18 @@ public class GameShapeAndColorFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
+        gameInProgress = true;
         generateFirstLevelAndStartTimer();
     }
 
     @Override
     public void onPause() {
-        remainTimeLiveSmartCountDownTimer.stop();
-        App.l("111111111111111");
-        super.onPause();
-        App.l("2222222222222222222");
         gameInProgress = false;
-        App.l("onPause stop");
+        if (remainTimeLiveSmartCountDownTimer != null) {
+            remainTimeLiveSmartCountDownTimer.stop();
+        }
         removeFragment();
+        super.onPause();
     }
 
     private void findViews(View view) {
@@ -197,9 +200,9 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private void startGame() {
+        if (!gameInProgress) return;
         GameMusicController.startGameMusic(getActivity());
         setButtonsAndClockAndLiveVisible();
-        gameInProgress = true;
         canClickOnButton = true;
         configureLivesCountDown();
         nextLevel();
@@ -250,10 +253,11 @@ public class GameShapeAndColorFragment extends Fragment {
     private void endGame() {
         gameInProgress = false;
         remainTimeLiveSmartCountDownTimer.stop();
-        App.l("endGame stop");
         closeGame();
         saveGameIfNewHighScore();
-        FragmentController.showShowScoreFragment(getActivity(), scoreInt, isNewBestScore);
+        if (getActivity() != null) {
+            FragmentController.showShowScoreFragment(getActivity(), scoreInt, isNewBestScore);
+        }
         removeFragment();
     }
 
@@ -277,7 +281,6 @@ public class GameShapeAndColorFragment extends Fragment {
                 }
             }
             remainTimeLiveSmartCountDownTimer.stop();
-            App.l("stop");
         } catch (Exception e) {
             App.l(e.getMessage());
         }
@@ -310,7 +313,7 @@ public class GameShapeAndColorFragment extends Fragment {
             public void on_tick(long l) {
                 //0 -> ... -> 1
                 //#######################################
-                if(!gameInProgress)return;//TODO ???? crash
+                if (!gameInProgress) return;
                 countdownTextView.setAlpha(1f);
                 countdownTextView.setText(getString(R.string.game_condition_template, scoreInt, (int) livesFloat));
                 //#######################################
@@ -589,7 +592,7 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     public void removeFragment() {
-        if(getActivity()!=null){
+        if (getActivity() != null) {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

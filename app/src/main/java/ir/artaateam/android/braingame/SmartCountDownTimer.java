@@ -49,6 +49,7 @@ public abstract class SmartCountDownTimer extends  CountDownTimer {
     }
 
     public void stop(){
+        super.cancel();
         isStop=true;
         isRunning=false;
         isEnded=true;
