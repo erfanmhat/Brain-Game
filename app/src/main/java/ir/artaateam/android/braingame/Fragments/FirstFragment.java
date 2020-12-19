@@ -2,31 +2,32 @@ package ir.artaateam.android.braingame.Fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ir.artaateam.android.braingame.App.App;
 import ir.artaateam.android.braingame.App.Data;
 import ir.artaateam.android.braingame.Controllers.FragmentController;
 import ir.artaateam.android.braingame.R;
 import ir.artaateam.android.braingame.App.MyApplication;
+import ir.artaateam.android.braingame.SmartCountDownTimer;
 
 //TODO add a progress bar to this fragment
 public class FirstFragment extends Fragment {
     private boolean isFirstTimePlaying;
-    private boolean isProgressing = false;
 
     private final static int DELAY_TIME_AFTER_END_PROGRESS = 2500;
     private final float DELAY_TIME_FOR_END_PROGRESS = 3000;
 
     private TextView gameNameTextView;
 
-    private CountDownTimer appFirstFragmentTimer;
+    private SmartCountDownTimer appFirstFragmentTimer;
 
     public FirstFragment() {
         super();
@@ -39,7 +40,7 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         setGameNameFont();
@@ -50,7 +51,7 @@ public class FirstFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (isProgressing) {
+        if (!appFirstFragmentTimer.isEnded()) {
             appFirstFragmentTimer.cancel();
         }
         FragmentController.removeFragment(getActivity(),this);
@@ -73,37 +74,39 @@ public class FirstFragment extends Fragment {
     }
 
     private void startCountDownTimer() {
-        appFirstFragmentTimer = new CountDownTimer((long) DELAY_TIME_FOR_END_PROGRESS, 100) {
+        appFirstFragmentTimer = new SmartCountDownTimer((long) DELAY_TIME_FOR_END_PROGRESS, 100) {
             @Override
-            public void onTick(long l) {
+            public void on_tick(long l) {
             }
 
             @Override
-            public void onFinish() {
+            public void on_finish() {
                 startEndProgressDelay();
             }
         };
-        appFirstFragmentTimer.start();
-        isProgressing = true;
+        appFirstFragmentTimer.startTimer();
     }
 
     private void startEndProgressDelay() {
-        appFirstFragmentTimer = new CountDownTimer(DELAY_TIME_AFTER_END_PROGRESS, 100) {
+        appFirstFragmentTimer = new SmartCountDownTimer(DELAY_TIME_AFTER_END_PROGRESS, 100) {
             @Override
-            public void onTick(long millisUntilFinished) {
+            public void on_tick(long millisUntilFinished) {
             }
 
             @Override
-            public void onFinish() {
+            public void on_finish() {
                 showNextFragment();
-                isProgressing = false;
             }
         };
-        appFirstFragmentTimer.start();
+        appFirstFragmentTimer.startTimer();
     }
 
     private void showNextFragment() {
         FragmentController.removeFragment(getActivity(),this);
+        if(getActivity()==null){
+            App.l("null activity error");
+            return;
+        }
         if (isFirstTimePlaying) {
             FragmentController.showSingUpFragment(getActivity());
         } else {
