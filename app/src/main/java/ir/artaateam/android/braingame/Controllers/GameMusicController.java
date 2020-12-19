@@ -1,13 +1,13 @@
 package ir.artaateam.android.braingame.Controllers;
 
 import android.app.Activity;
-import android.os.CountDownTimer;
 
 import ir.artaateam.android.braingame.App.App;
 import ir.artaateam.android.braingame.R;
+import ir.artaateam.android.braingame.SmartCountDownTimer;
 
 public class GameMusicController {
-    private static CountDownTimer countDownTimer;
+    private static SmartCountDownTimer smartCountDownTimer;
 
     private static final long GAME_MUSIC_PART_1_DURATION = 15360;
     private static final long GAME_MUSIC_PART_2_DURATION = 84480;
@@ -15,17 +15,14 @@ public class GameMusicController {
     //private static final long GAME_MUSIC_PART_4_DURATION = 310000;
 
     private static int numberOfMusicPart;
-    private static boolean isCountDownTimerStarted;
-
 
     public static void startGameMusic(Activity activity) {
         numberOfMusicPart = 1;
-        isCountDownTimerStarted=false;
         nextMusic(activity);
     }
 
     private static void nextMusic(Activity activity) {
-        App.t("next music "+numberOfMusicPart);
+        App.l("next music "+numberOfMusicPart);
         if (numberOfMusicPart == 1) {
             MusicController.startMusic(activity, R.raw.game_music_part_1, false);
             setCountDownForNextMusic(activity, GAME_MUSIC_PART_1_DURATION);
@@ -41,27 +38,25 @@ public class GameMusicController {
     }
 
     private static void setCountDownForNextMusic(Activity activity, long duration) {
-        countDownTimer = new CountDownTimer(duration, 100) {
+        smartCountDownTimer = new SmartCountDownTimer(duration, 100) {
             @Override
-            public void onTick(long millisUntilFinished) {
+            public void on_tick(long millisUntilFinished) {
             }
 
             @Override
-            public void onFinish() {
+            public void on_finish() {
                 numberOfMusicPart++;
                 nextMusic(activity);
             }
         };
-        countDownTimer.start();
-        isCountDownTimerStarted=true;
+        smartCountDownTimer.startTimer();
     }
 
     public static void stopGameMusic(String fun){
         App.l(fun+" stop Game Music");
         MusicController.stopMusic();
-        if(isCountDownTimerStarted){
-            countDownTimer.cancel();
-            isCountDownTimerStarted=false;
+        if(!smartCountDownTimer.isEnded()){
+            smartCountDownTimer.cancel();
         }
     }
 
