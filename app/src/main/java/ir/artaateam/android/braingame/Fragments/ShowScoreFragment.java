@@ -112,8 +112,8 @@ public class ShowScoreFragment extends Fragment {
             coinPlusInt += 100;
             gemPlusInt += 10;
         }
-        coinPlusInt += rand.nextInt(30);
-        gemPlusInt += rand.nextInt(7);
+        coinPlusInt += rand.nextInt(15);
+        gemPlusInt += rand.nextInt(3);
         if (scoreInt < 5) {
             gemPlusInt = 0;
             coinPlusInt = 2;
