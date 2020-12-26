@@ -54,12 +54,10 @@ public class ShowScoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
-        getScoreIntFromBundle();
         rewardToPlayerAndShowReward();
         setScoreTextView();
         setBestScoreTextView();
         scoreAndNewBestScoreAnimation();
-        App.l("show score fragment");
         MusicController.startMusic(getActivity(), R.raw.music_show_score, false);
         otherAnimations();
     }
@@ -84,6 +82,7 @@ public class ShowScoreFragment extends Fragment {
 
     private void configure() {
         setFont();
+        scoreInt = Data.get().getScoreInt();
         homeImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
             FragmentController.removeFragment(getActivity(), this);
@@ -107,12 +106,9 @@ public class ShowScoreFragment extends Fragment {
         String gemString = String.valueOf(Data.get().getGem());
         String coinString = String.valueOf(Data.get().getCoin());
 
-        //TODO cut to a new func
-        // and some changes
         int gemPlusInt = (int) ((scoreInt / 10) * Math.log(scoreInt));
         int coinPlusInt = (int) (scoreInt * Math.log(scoreInt));
-        assert getArguments() != null;
-        if (getArguments().getBoolean("isNewBestScore", false)) {
+        if (Data.get().isNewHighScore()) {
             coinPlusInt += 100;
             gemPlusInt += 10;
         }
@@ -132,11 +128,6 @@ public class ShowScoreFragment extends Fragment {
         Data.get().setCoin(Data.get().getCoin() + coinPlusInt);
     }
 
-    private void getScoreIntFromBundle() {
-        assert getArguments() != null;
-        scoreInt = getArguments().getInt("score");
-    }
-
     private void setFont() {
         Typeface font = Typeface.createFromAsset(
                 MyApplication.getContext().getAssets(),
@@ -149,8 +140,7 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void setBestScoreTextView() {
-        assert getArguments() != null;
-        if (getArguments().getBoolean("isNewBestScore", false)) {
+        if (Data.get().isNewHighScore()) {
             String recordString = getString(R.string.new_best_score) + " ";
             newBestScoreTextView.setText(recordString);
         }

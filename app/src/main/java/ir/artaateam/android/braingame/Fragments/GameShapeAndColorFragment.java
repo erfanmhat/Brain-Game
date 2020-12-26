@@ -59,20 +59,18 @@ public class GameShapeAndColorFragment extends Fragment {
     private final float MAX_VALUE_OF_LIVES = 4f;
     private final float MAX_VALUE_PROGRESSBAR = 100f;
 
-    private final double HARDENING_COEFFICIENT = 0.985;
+    private final static double HARDENING_COEFFICIENT = 0.985;
 
-    private final float INCREASE_LIVE = 1;
-    private final float DECREASE_LIVE = -1;
+    private final static float INCREASE_LIVE = 1;
+    private final static float DECREASE_LIVE = -1;
 
     private GameDifficulty gameDifficulty = NULLGameDifficulty;
 
-    private static int scoreInt = 0;
     private int countdownInt;
     private float livesFloat;
     private float livesProgressbarProgress;
     private boolean canClickOnButton = false;
     private boolean gameInProgress = false;
-    private static boolean isNewBestScore = false;
     private boolean Paused = false;
 
     private ImageView shapeButtonImageView;
@@ -148,6 +146,8 @@ public class GameShapeAndColorFragment extends Fragment {
 
     private void configure() {
         setGameDifficulty(Data.get().getGameDifficulty());
+        Data.get().setScoreInt(0);
+        Data.get().setIsNewHighScore(false);
         configureAndStartLivesProgressbar();
         livesFloat = FIRST_VALUE_OF_LIVES;
 
@@ -196,7 +196,9 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private double hardeningCoefficientAccordingToScoreInt() {
-        return Math.pow(HARDENING_COEFFICIENT, scoreInt);
+        return Math.pow(
+                HARDENING_COEFFICIENT,
+                Data.get().getScoreInt());
     }
 
     private void startGame() {
@@ -256,7 +258,7 @@ public class GameShapeAndColorFragment extends Fragment {
         closeGame();
         saveGameIfNewHighScore();
         if (getActivity() != null) {
-            FragmentController.showShowScoreFragment(getActivity(), scoreInt, isNewBestScore);
+            FragmentController.showShowScoreFragment(getActivity());
         }
         removeFragment();
     }
@@ -315,7 +317,7 @@ public class GameShapeAndColorFragment extends Fragment {
                 //#######################################
                 if (!gameInProgress) return;
                 countdownTextView.setAlpha(1f);
-                countdownTextView.setText(getString(R.string.game_condition_template, scoreInt, (int) livesFloat));
+                countdownTextView.setText(getString(R.string.game_condition_template, Data.get().getScoreInt(), (int) livesFloat));
                 //#######################################
                 float coefficientOfDecreaseLivesProgressbarProgress =
                         ((MAX_TIME_FOR_ANSWER - (float) l) / MAX_TIME_FOR_ANSWER);
@@ -447,11 +449,11 @@ public class GameShapeAndColorFragment extends Fragment {
 
     private void isNewBestScore() {
         int oldScore = Data.get().getBestScore();
-        if ((oldScore != 0) && (oldScore < scoreInt)) {
-            if (!isNewBestScore) {
+        if ((oldScore != 0) && (oldScore < Data.get().getScoreInt())) {
+            if (!Data.get().isNewHighScore()) {
                 App.t(getString(R.string.new_best_score));
             }
-            isNewBestScore = true;
+            Data.get().setIsNewHighScore(true);
         }
     }
 
@@ -481,8 +483,8 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private void saveGameIfNewHighScore() {
-        if (Data.get().getBestScore() < scoreInt) {
-            Data.get().setBestScore(scoreInt);
+        if (Data.get().getBestScore() < Data.get().getScoreInt()) {
+            Data.get().setBestScore(Data.get().getScoreInt());
         }
     }
 
@@ -572,23 +574,19 @@ public class GameShapeAndColorFragment extends Fragment {
     }
 
     private void increaseScoreInt() {
+        int scorePlusInt=0;
         if (gameDifficulty == instructions) {
-            scoreInt++;
+            scorePlusInt=1;
         } else if (gameDifficulty == easy) {
-            scoreInt += 2;
+            scorePlusInt=2;
         } else if (gameDifficulty == normal) {
-            scoreInt += 3;
+            scorePlusInt=3;
         } else if (gameDifficulty == hard) {
-            scoreInt += 4;
+            scorePlusInt=4;
         }
-    }
-
-    public static int getScoreInt() {
-        return scoreInt;
-    }
-
-    public static boolean getIsNewBestScore() {
-        return isNewBestScore;
+        Data.get().setScoreInt(
+                Data.get().getScoreInt()+scorePlusInt
+        );
     }
 
     public void removeFragment() {
@@ -600,6 +598,4 @@ public class GameShapeAndColorFragment extends Fragment {
                     .commit();
         }
     }
-
-
 }

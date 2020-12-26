@@ -72,14 +72,9 @@ public class FragmentController {
                 .commit();
     }
 
-    public static void showShowScoreFragment(@NonNull FragmentActivity activity, int scoreInt, boolean isNewBestScore) {
+    public static void showShowScoreFragment(@NonNull FragmentActivity activity) {
         fragmentsStatus = ShowScoreFragment;
         ShowScoreFragment showScoreFragment = new ShowScoreFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("score", scoreInt);
-        bundle.putBoolean("isNewBestScore", isNewBestScore);
-        showScoreFragment.setArguments(bundle);
-
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.app_main_frame, showScoreFragment)

@@ -28,10 +28,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentController.showFirstFragment(MainActivity.this);
             showFirstFragment = false;
         } else if (FragmentController.getFragmentsStatus() == FragmentsStatus.GameShapeAndColorFragment) {
-            FragmentController.showShowScoreFragment(
-                    MainActivity.this,
-                    GameShapeAndColorFragment.getScoreInt(),
-                    GameShapeAndColorFragment.getIsNewBestScore());
+            FragmentController.showShowScoreFragment(MainActivity.this);
         } else {
             FragmentController.showMainFragment(MainActivity.this);
         }

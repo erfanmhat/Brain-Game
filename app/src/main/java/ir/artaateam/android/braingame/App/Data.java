@@ -10,6 +10,8 @@ public class Data {
     private int gem;
     private int coin;
     private int bestScore;
+    private int scoreInt;
+    private boolean isNewHighScore;
     private static Data instance;
 
     public static Data get() {
@@ -70,5 +72,21 @@ public class Data {
 
     public void setGameDifficulty(GameDifficulty gameDifficulty) {
         this.gameDifficulty = gameDifficulty;
+    }
+
+    public int getScoreInt() {
+        return scoreInt;
+    }
+
+    public void setScoreInt(int scoreInt) {
+        this.scoreInt = scoreInt;
+    }
+
+    public boolean isNewHighScore() {
+        return isNewHighScore;
+    }
+
+    public void setIsNewHighScore(boolean newHighScore) {
+        isNewHighScore = newHighScore;
     }
 }
