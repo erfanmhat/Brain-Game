@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -39,7 +40,7 @@ public class ShowScoreFragment extends Fragment {
 
     public ShowScoreFragment() {
         super();
-        rand=new Random();
+        rand = new Random();
     }
 
     @Nullable
@@ -49,7 +50,7 @@ public class ShowScoreFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         configure();
@@ -65,7 +66,7 @@ public class ShowScoreFragment extends Fragment {
 
     @Override
     public void onPause() {
-        FragmentController.removeFragment(getActivity(),this);
+        FragmentController.removeFragment(getActivity(), this);
         MusicController.stopMusic();
         super.onPause();
     }
@@ -85,53 +86,59 @@ public class ShowScoreFragment extends Fragment {
         setFont();
         homeImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
-            FragmentController.removeFragment(getActivity(),this);
-            FragmentController.showMainFragment(getActivity());
+            FragmentController.removeFragment(getActivity(), this);
+            if (getActivity() != null) {
+                FragmentController.showMainFragment(getActivity());
+            }
         });
         replayImageView.setOnClickListener(view -> {
             MusicController.stopMusic();
-            FragmentController.removeFragment(getActivity(),this);
-            FragmentController.showGameShapeAndColorFragment(getActivity());
+            FragmentController.removeFragment(getActivity(), this);
+            if (getActivity() != null) {
+                FragmentController.showGameShapeAndColorFragment(getActivity());
+            }
         });
-        settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
+        if(getActivity()!=null){
+            settingsImageView.setOnClickListener(view -> FragmentController.showSettingsFragment(getActivity()));
+        }
     }
 
-    private void rewardToPlayerAndShowReward(){
-        String gemString=String.valueOf(Data.get().getGem());
-        String coinString=String.valueOf(Data.get().getCoin());
+    private void rewardToPlayerAndShowReward() {
+        String gemString = String.valueOf(Data.get().getGem());
+        String coinString = String.valueOf(Data.get().getCoin());
 
         //TODO cut to a new func
         // and some changes
-        int gemPlusInt=(int)((scoreInt/10)*Math.log((double)scoreInt));
-        int coinPlusInt=(int)(scoreInt*Math.log((double)scoreInt));
-        if(getArguments().getBoolean("isNewBestScore", false)){
-            coinPlusInt+=100;
-            gemPlusInt+=10;
+        int gemPlusInt = (int) ((scoreInt / 10) * Math.log(scoreInt));
+        int coinPlusInt = (int) (scoreInt * Math.log(scoreInt));
+        assert getArguments() != null;
+        if (getArguments().getBoolean("isNewBestScore", false)) {
+            coinPlusInt += 100;
+            gemPlusInt += 10;
         }
-        coinPlusInt+=rand.nextInt(30);
-        gemPlusInt+=rand.nextInt(7);
-        if(scoreInt<5){
-            gemPlusInt=0;
-            coinPlusInt=2;
+        coinPlusInt += rand.nextInt(30);
+        gemPlusInt += rand.nextInt(7);
+        if (scoreInt < 5) {
+            gemPlusInt = 0;
+            coinPlusInt = 2;
         }
 
-        gemString+=" + "+gemPlusInt+" ";
-        coinString+=" + "+coinPlusInt+" ";
+        gemString += " + " + gemPlusInt + " ";
+        coinString += " + " + coinPlusInt + " ";
         gemTextView.setText(gemString);
         coinTextView.setText(coinString);
 
-        Data.get().setGem(Data.get().getGem()+gemPlusInt);
-        Data.get().setCoin(Data.get().getCoin()+coinPlusInt);
+        Data.get().setGem(Data.get().getGem() + gemPlusInt);
+        Data.get().setCoin(Data.get().getCoin() + coinPlusInt);
     }
 
-    private void getScoreIntFromBundle(){
-        Bundle bundle;
-        bundle = getArguments();
-        scoreInt = bundle.getInt("score");
+    private void getScoreIntFromBundle() {
+        assert getArguments() != null;
+        scoreInt = getArguments().getInt("score");
     }
 
-    private void setFont(){
-        Typeface font=Typeface.createFromAsset(
+    private void setFont() {
+        Typeface font = Typeface.createFromAsset(
                 MyApplication.getContext().getAssets(),
                 MyApplication.main.GAME_MAIN_FONT_PATH
         );
@@ -142,8 +149,9 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void setBestScoreTextView() {
+        assert getArguments() != null;
         if (getArguments().getBoolean("isNewBestScore", false)) {
-            String recordString=getString(R.string.new_best_score)+" ";
+            String recordString = getString(R.string.new_best_score) + " ";
             newBestScoreTextView.setText(recordString);
         }
     }
@@ -192,7 +200,7 @@ public class ShowScoreFragment extends Fragment {
     }
 
     private void setScoreTextView() {
-        String scoreString=getString(R.string.speed_final_score, scoreInt)+" ";
+        String scoreString = getString(R.string.speed_final_score, scoreInt) + " ";
         scoreTextView.setText(scoreString);
     }
 
